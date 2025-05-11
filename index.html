@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <style>
+        /* Base styles and reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family:
+                "Inter",
+                -apple-system,
+                Roboto,
+                Helvetica,
+                sans-serif;
+            background-color: rgba(249, 249, 249, 1);
+        }
+
+        /* Main container */
+        .dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Top navigation */
+        .top-navigation {
+            border-bottom: 1px solid rgba(0, 0, 0, 1);
+            display: flex;
+            min-height: 80px;
+            width: 100%;
+            padding: 5px;
+            align-items: center;
+            overflow: hidden;
+            font-size: 17px;
+            color: rgba(18, 18, 18, 1);
+            font-weight: 600;
+            text-align: center;
+            justify-content: space-between;
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+
+        @media (max-width: 991px) {
+            .top-navigation {
+                max-width: 100%;
+            }
+        }
+
+        .nav-menu {
+            overflow-x: auto;
+            align-self: stretch;
+            display: flex;
+            min-width: 240px;
+            margin: auto;
+            min-height: 70px;
+            width: 1430px;
+            padding: 10px 0;
+            align-items: center;
+            overflow: hidden;
+            justify-content: flex-start;
+        }
+
+        @media (max-width: 991px) {
+            .nav-menu {
+                max-width: 100%;
+            }
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            align-self: stretch;
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 1);
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+            margin: auto;
+            min-height: 50px;
+            padding: 15px 10px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .nav-list li:nth-child(1) .nav-link {
+            width: 145px;
+            padding-left: 18px;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+
+        .nav-list li:nth-child(2) .nav-link {
+            width: 204px;
+        }
+
+        .nav-list li:nth-child(3) .nav-link {
+            width: 215px;
+        }
+
+        .nav-list li:nth-child(4) .nav-link {
+            width: 207px;
+        }
+
+        .nav-list li:nth-child(5) .nav-link {
+            width: 206px;
+        }
+
+        .nav-list li:nth-child(6) .nav-link {
+            width: 217px;
+        }
+
+        .nav-list li:nth-child(7) .nav-link {
+            width: 205px;
+        }
+
+        @media (max-width: 991px) {
+            .nav-list li:nth-child(1) .nav-link {
+                white-space: initial;
+            }
+        }
+
+        /* Left sidebar */
+        .left-sidebar {
+            border-right: 1px solid rgba(0, 0, 0, 1);
+            display: flex;
+            min-width: 240px;
+            min-height: 944px;
+            padding: 10px 0 180px;
+            flex-direction: column;
+            overflow: hidden;
+            align-items: center;
+            color: rgba(0, 0, 0, 1);
+            font-weight: 500;
+            text-align: center;
+            justify-content: flex-start;
+            flex-grow: 1;
+            flex-shrink: 1;
+            width: 291px;
+        }
+
+        @media (max-width: 991px) {
+            .left-sidebar {
+                padding-bottom: 100px;
+            }
+        }
+
+        .brand-container {
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 1);
+            box-shadow: 1px 1px 1px 0;
+            display: flex;
+            min-height: 50px;
+            width: 100%;
+            max-width: 340px;
+            padding: 2px 10px;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .brand-name {
+            align-self: stretch;
+            margin: auto;
+            min-height: 46px;
+            padding: 10px;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-family: "Inter", sans-serif;
+        }
+
+        .sidebar-content {
+            border-top: 1px solid rgba(0, 0, 0, 1);
+            display: flex;
+            margin-top: 10px;
+            min-height: 614px;
+            width: 100%;
+            max-width: 360px;
+            padding-top: 20px;
+            flex-direction: column;
+            align-items: center;
+            font-size: 16px;
+            color: rgba(18, 18, 18, 1);
+            justify-content: flex-start;
+        }
+
+        .search-container {
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 1);
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(0, 0, 0, 1);
+            display: flex;
+            min-height: 44px;
+            width: 100%;
+            padding: 7px 15px;
+            align-items: center;
+            gap: 20px;
+            font-size: 20px;
+            color: rgba(122, 122, 122, 1);
+            font-weight: 600;
+            justify-content: flex-start;
+            max-width: 340px;
+        }
+
+        .search-icon {
+            aspect-ratio: 1;
+            object-fit: contain;
+            object-position: center;
+            width: 30px;
+            align-self: stretch;
+            margin: auto;
+            flex-shrink: 0;
+        }
+
+        .search-placeholder {
+            align-self: stretch;
+            margin: auto;
+            font-weight: 500;
+            color: rgba(122, 122, 122, 1);
+        }
+
+        .section-title {
+            align-self: stretch;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 1);
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+            margin-top: 20px;
+            min-height: 40px;
+            width: 320px;
+            max-width: 100%;
+            padding: 11px 10px;
+            gap: 10px;
+            color: rgba(0, 0, 0, 1);
+            letter-spacing: 0.96px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .sidebar-navigation {
+            width: 100%;
+            max-width: 340px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            width: 100%;
+        }
+
+        .sidebar-menu-item {
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 1);
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+            display: flex;
+            margin-top: 20px;
+            min-height: 50px;
+            width: 100%;
+            padding: 7px 15px;
+            align-items: center;
+            text-transform: uppercase;
+            justify-content: space-between;
+        }
+
+        .menu-icon {
+            aspect-ratio: 1;
+            object-fit: contain;
+            object-position: center;
+            width: 36px;
+            align-self: stretch;
+            margin: auto;
+            flex-shrink: 0;
+        }
+
+        .menu-text {
+            align-self: stretch;
+            margin: auto;
+        }
+
+        .expand-icon {
+            aspect-ratio: 1;
+            object-fit: contain;
+            object-position: center;
+            width: 30px;
+            align-self: stretch;
+            margin: auto;
+            flex-shrink: 0;
+        }
+
+        .sidebar-menu-item:nth-child(1) {
+            gap: 70px;
+        }
+
+        .sidebar-menu-item:nth-child(2) {
+            gap: 39px;
+        }
+
+        .sidebar-menu-item:nth-child(3) {
+            gap: 44px;
+        }
+
+        .sidebar-menu-item:nth-child(4) {
+            gap: 38px;
+        }
+
+        .sidebar-menu-item:nth-child(5) {
+            gap: 41px;
+        }
+
+        .sidebar-menu-item:nth-child(6) {
+            gap: 30px;
+        }
+
+        .sidebar-menu-item:nth-child(7) {
+            gap: 40px;
+        }
+
+        @media (max-width: 991px) {
+            .sidebar-menu-item:nth-child(1) {
+                white-space: initial;
+            }
+        }
+
+        .user-profile {
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 1);
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+            display: flex;
+            margin-top: 10px;
+            max-width: 100%;
+            width: 340px;
+            padding: 10px;
+            align-items: stretch;
+            gap: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 991px) {
+            .user-profile {
+                white-space: initial;
+            }
+        }
+
+        .user-initials {
+            border-radius: 3px;
+            background-color: rgba(249, 249, 249, 1);
+            padding: 7px;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 991px) {
+            .user-initials {
+                white-space: initial;
+            }
+        }
+
+        .user-info {
+            font-size: 17px;
+            flex-grow: 1;
+            flex-shrink: 0;
+            flex-basis: 0;
+            width: fit-content;
+        }
+
+        @media (max-width: 991px) {
+            .user-info {
+                white-space: initial;
+            }
+        }
+
+        .company-name {
+            border-radius: 3px;
+            background-color: rgba(249, 249, 249, 1);
+            padding: 5px 34px;
+        }
+
+        @media (max-width: 991px) {
+            .company-name {
+                padding-left: 20px;
+                padding-right: 20px;
+                white-space: initial;
+            }
+        }
+
+        .user-status {
+            border-radius: 3px;
+            background-color: rgba(249, 249, 249, 1);
+            display: flex;
+            margin-top: 5px;
+            flex-shrink: 0;
+            height: 20px;
+        }
+
+        /* Main content */
+        .main-content {
+            border-bottom: 1px solid rgba(0, 0, 0, 1);
+            display: flex;
+            min-width: 240px;
+            min-height: 126px;
+            padding: 13px 10px;
+            flex-direction: column;
+            overflow: hidden;
+            align-items: flex-start;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 1);
+            font-weight: 500;
+            white-space: nowrap;
+            text-align: center;
+            justify-content: center;
+            flex-grow: 1;
+            flex-shrink: 1;
+            width: 666px;
+            max-height: 79px;
+        }
+
+        @media (max-width: 991px) {
+            .main-content {
+                max-width: 100%;
+                white-space: initial;
+            }
+        }
+
+        .overview-title {
+            align-self: stretch;
+            border-radius: 3px;
+            background-color: rgba(0, 0, 0, 1);
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+            padding: 10px;
+            gap: 10px;
+        }
+
+        @media (max-width: 991px) {
+            .overview-title {
+                white-space: initial;
+            }
+        }
+
+        /* Right sidebar */
+        .right-sidebar {
+            border-left: 1px solid rgba(0, 0, 0, 1);
+            display: flex;
+            min-width: 240px;
+            min-height: 944px;
+            padding: 12px 10px;
+            flex-direction: column;
+            overflow: hidden;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            flex-shrink: 1;
+            width: 276px;
+        }
+
+        .sidebar-widget {
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 1);
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+            display: flex;
+            min-height: 300px;
+            max-width: 100%;
+            width: 325px;
+        }
+
+        .sidebar-widget:not(:first-child) {
+            margin-top: 10px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <header class="top-navigation">
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Account & Budget</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Income & Expenses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Investment & Loan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Invoice & Payment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Reports & Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Security & Backup</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <aside class="left-sidebar">
+            <div class="brand-container">
+                <h1 class="brand-name">ca accountant</h1>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="search-container">
+                    <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/f7bdb3b529d211e8f19872d765266510efcc52d7e0c7429a52f7809e0e3465b4?placeholderIfAbsent=true"
+                        alt="Search icon" class="search-icon" />
+                    <span class="search-placeholder">Search...</span>
+                </div>
+
+                <h2 class="section-title">PROJECT MANAGEMENT</h2>
+
+                <nav class="sidebar-navigation">
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu-item">
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/e102efee4738ccc98666c7f0b98e6da0bf019f80c9d4a6b01880a5ef09cf78ec?placeholderIfAbsent=true"
+                                alt="Dashboard icon" class="menu-icon" />
+                            <span class="menu-text">Dashboard</span>
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/97f77ed9a01662b810a9e8fb151f7a39276ec557d9717aa69b0e78a946679abb?placeholderIfAbsent=true"
+                                alt="Expand icon" class="expand-icon" />
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/9f0608eced91787e87e6f9f1a03d029b34c2a9efbdf146636c9b4951cb7b573f?placeholderIfAbsent=true"
+                                alt="Account icon" class="menu-icon" />
+                            <span class="menu-text">account & budget</span>
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/97f77ed9a01662b810a9e8fb151f7a39276ec557d9717aa69b0e78a946679abb?placeholderIfAbsent=true"
+                                alt="Expand icon" class="expand-icon" />
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/d432a35872e42bc679183188355abb878d53ae72496884aa5d236d9b5f65206c?placeholderIfAbsent=true"
+                                alt="Income icon" class="menu-icon" />
+                            <span class="menu-text">Income & Expense</span>
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/97f77ed9a01662b810a9e8fb151f7a39276ec557d9717aa69b0e78a946679abb?placeholderIfAbsent=true"
+                                alt="Expand icon" class="expand-icon" />
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/285b9200fd2abc2c1664cd61bad7d2505ba7b7198bfcbe979f204c47a15a1f0b?placeholderIfAbsent=true"
+                                alt="Investment icon" class="menu-icon" />
+                            <span class="menu-text">Investment & Loan</span>
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/97f77ed9a01662b810a9e8fb151f7a39276ec557d9717aa69b0e78a946679abb?placeholderIfAbsent=true"
+                                alt="Expand icon" class="expand-icon" />
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/18b4a25bffacea4f8da8d14d0d867104b8752aa52a2a90a5f9ffda0b981fd28f?placeholderIfAbsent=true"
+                                alt="Invoice icon" class="menu-icon" />
+                            <span class="menu-text">Invoice & Payment</span>
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/97f77ed9a01662b810a9e8fb151f7a39276ec557d9717aa69b0e78a946679abb?placeholderIfAbsent=true"
+                                alt="Expand icon" class="expand-icon" />
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/eae85e1a283e4b27020d4fee9609d85eee47e8d7e11d9ed761e02d0a3730a0ab?placeholderIfAbsent=true"
+                                alt="Reports icon" class="menu-icon" />
+                            <span class="menu-text">Reports & Analytics</span>
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/97f77ed9a01662b810a9e8fb151f7a39276ec557d9717aa69b0e78a946679abb?placeholderIfAbsent=true"
+                                alt="Expand icon" class="expand-icon" />
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/b390a6610efc9d6fe568b70a4478a8285fcba7a5096f2b00f5fad5107d68723e?placeholderIfAbsent=true"
+                                alt="Security icon" class="menu-icon" />
+                            <span class="menu-text">Security & Backup</span>
+                            <img src="https://cdn.builder.io/api/v1/image/assets/dae54819bd5e4445bc03e79f2ddc85c2/97f77ed9a01662b810a9e8fb151f7a39276ec557d9717aa69b0e78a946679abb?placeholderIfAbsent=true"
+                                alt="Expand icon" class="expand-icon" />
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="user-profile">
+                <div class="user-initials">MH</div>
+                <div class="user-info">
+                    <div class="company-name">MAC_HOLDING'S</div>
+                    <div class="user-status"></div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-header">
+                <h2 class="overview-title">Overview</h2>
+            </header>
+        </main>
+
+        <aside class="right-sidebar">
+            <section class="sidebar-widget"></section>
+            <section class="sidebar-widget"></section>
+            <section class="sidebar-widget"></section>
+        </aside>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,315 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --text-color: white;
+    --hover-button: #00ffff;
+    --secondary-color: #0A0A0A;
+    --dim-color: #888888;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden auto;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+.titleheader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 28px;
+    text-transform: capitalize;
+}
+
+.links {
+    text-transform: uppercase;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 11px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    /* Needed for pseudo-element positioning */
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+/* .nav {
+    margin-left: 300px;
+} */
+
+.updation {
+    width: fit-content;
+    font-size: 11px;
+    text-transform: capitalize;
+    /* margin-left: 0px; */
+    color: var(--dim-color);
+}
+
+.links::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    /* Underline thickness */
+    width: 0;
+    background-color: currentColor;
+    /* Uses the text color */
+    transition: width 0.3s ease;
+}
+
+.links:hover {
+    transform: translateY(-7px);
+    color: var(--hover-button);
+    /* Moves the link upward */
+}
+
+.links:hover::after {
+    width: 100%;
+    /* Expands the underline fully */
+}
+
+.btn {
+    width: 130px;
+    height: 35px;
+    background: #ffffff;
+    color: #000000;
+    font-size: 12px;
+    font-weight: 500;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background-color: #00ffff;
+    color: black;
+}
+
+.top-section {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+}
+
+.title1 {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.del {
+    background-color: #351F1F;
+    width: 60px;
+    height: 30px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    color: #EF4444;
+    font-size: 11px;
+    border: none;
+    text-transform: uppercase;
+}
+
+.del:hover {
+    background-color: #525252;
+    color: #ffffff;
+}
+
+.symbol {
+    width: 30px;
+    height: 30px;
+}
+
+.amount {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.top-header {
+    background-color: #1E1E1E;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 2.4vw;
+}
+
+.card-container {
+    /* flex-direction: row; */
+    /* flex-wrap: wrap; */
+    display: flex;
+
+
+    flex-flow: row wrap;
+    /* this upper one is used fotr both for flex direction and also for wrapping */
+
+
+    width: 100%;
+    margin: 2vw;
+    margin-bottom: 20px;
+    gap: 2vw;
+    box-sizing: border-box;
+}
+
+.items {
+    font-size: 12px;
+}
+
+/* 🔹 Card Styling (with 5px padding) */
+.card {
+    background: #1A1A1A;
+    width: 22.4vw;
+    height: 160px;
+    border-radius: 5px;
+    padding: 10px 10px;
+    /* ✅ Updated padding */
+    box-shadow: 1px 1px 1px rgba(255, 255, 255, 0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: inherit;
+    background: linear-gradient(45deg, #ff0000, #ff7300, #00ff00, #00ffff, #7a00ff, #ff00ff, #ff0000);
+    background-size: 400% 400%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+    opacity: 1;
+    animation: waterFlow 3s linear infinite;
+}
+
+@keyframes waterFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Middle Section */
+/* Middle Section - Centered Vertically, Aligned Left Horizontally */
+.upper-middle {
+    display: flex;
+    /* Use flexbox */
+    flex-direction: column;
+    align-items: flex-start;
+    /* Align content to the left */
+    justify-content: center;
+    /* Center vertically */
+    position: relative;
+    /* Keep it positioned within the card */
+    /* left: 10px; */
+    /* Adjust spacing from the left edge */
+    /* top: 50%; */
+    /* transform: translateY(-50%); */
+    /* Perfect vertical centering */
+}
+
+.lower-middle {
+    display: flex;
+    /* Use flexbox */
+    flex-direction: column;
+    align-items: flex-end;
+    /* Align content to the left */
+    justify-content: center;
+    /* Center vertically */
+    position: relative;
+    /* Keep it positioned within the card */
+    /* left: 10px; */
+    /* Adjust spacing from the left edge */
+    /* top: 50%; */
+    /* transform: translateY(-50%); */
+    /* Perfect vertical centering */
+}
+
+.middle-section {
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    display: inline;
+}
+
+/* Titles */
+.title-for-amount {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #aaaaaa;
+}
+
+.title-for-sector {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #888888;
+}
+
+/* 🔹 Bottom Section (Fixed Padding & Alignment) */
+.Bottom-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    /* padding: 5px 0; ✅ Adjusted padding inside card */
+}
+
+/* Upper and Lower Bottom as a Grid */
+.upper-lower-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+/* Ensuring the 'Amount' section is vertical */
+.upper-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    /* text-align: center; */
+    /* gap: 4px; */
+}
+
+/* Ensuring the 'Return' section is vertical */
+.lower-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* gap: 4px; */
+}
+
+.return {
+    color: #00c853;
+    font-size: 14px;
+}
