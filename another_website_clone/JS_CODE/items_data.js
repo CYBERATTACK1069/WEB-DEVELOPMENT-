@@ -1,0 +1,148 @@
+const itemsForweekly_best_sellers = [
+  {
+    id: "1",
+    item_name: "Ergonomic Wireless Mouse with RGB Lighting",
+    company_name: "Advanced Tech & Gadgets Inc.",
+    price: 250.5, // Price in PKR
+    rating: 4.5,
+    reviews: 1500,
+    image: "/pics/template_1-min.jpg",
+  },
+  {
+    id: "2",
+    item_name: "Portable Bluetooth Speaker with Deep Bass",
+    company_name: "SoundWave Audio Solutions",
+    price: 300.75, // Price in PKR
+    rating: 4.7,
+    reviews: 3200,
+    image: "/pics/template_2-min.jpg",
+  },
+  {
+    id: "3",
+    item_name: "Mechanical Gaming Keyboard with Custom Switches",
+    company_name: "GameMaster Pro Gaming Gear",
+    price: 400.25, // Price in PKR
+    rating: 4.8,
+    reviews: 2800,
+    image: "/pics/template_3-min.jpg",
+  },
+  {
+    id: "4",
+    item_name: "Full HD 1080p Webcam with Privacy Shutter",
+    company_name: "ClearView Communications",
+    price: 350.99, // Price in PKR
+    rating: 4.6,
+    reviews: 1900,
+    image: "/pics/template_4-min.jpg",
+  },
+  {
+    id: "5",
+    item_name: "7-in-1 USB-C Hub with HDMI and SD Card Reader",
+    company_name: "ConnectMore Connectivity Solutions",
+    price: 280.1, // Price in PKR
+    rating: 4.4,
+    reviews: 2100,
+    image: "/pics/template_5-min.jpg",
+  },
+  {
+    id: "6",
+    item_name: "Adjustable Aluminum Laptop Stand",
+    company_name: "ErgoLife Ergonomic Solutions",
+    price: 200.0, // Price in PKR
+    rating: 4.9,
+    reviews: 4500,
+    image: "/pics/template_6-min.jpg",
+  },
+  {
+    id: "7",
+    item_name: "2TB External Hard Drive with USB 3.0 Speeds",
+    company_name: "DataSafe Storage Solutions",
+    price: 450.6, // Price in PKR
+    rating: 4.7,
+    reviews: 5600,
+    image: "/pics/template_7-min.jpg",
+  },
+  {
+    id: "8",
+    item_name: "Active Noise-Cancelling Over-Ear Headphones",
+    company_name: "QuietZone Audio Experiences",
+    price: 480.3, // Price in PKR
+    rating: 4.9,
+    reviews: 8900,
+    image: "/pics/template_8-min.jpg",
+  },
+];
+const itemsFortop_selling_products = [
+  {
+    id: "9",
+    item_name: "Smartwatch with Heart Rate Monitor",
+    company_name: "FitTech Wearables",
+    price: 550.0,
+    rating: 4.6,
+    reviews: 3200,
+    image: "/pics/template_9-min.jpg",
+  },
+  {
+    id: "10",
+    item_name: "4K Action Camera with Waterproof Case",
+    company_name: "AdventurePro Cameras",
+    price: 620.5,
+    rating: 4.8,
+    reviews: 4100,
+    image: "/pics/template_10-min.jpg",
+  },
+  {
+    id: "11",
+    item_name: "Electric Toothbrush with Pressure Sensor",
+    company_name: "BrightSmile Dental Care",
+    price: 180.75,
+    rating: 4.7,
+    reviews: 6800,
+    image: "/pics/template_11-min.jpg",
+  },
+  {
+    id: "12",
+    item_name: "Wireless Charging Pad for Multiple Devices",
+    company_name: "PowerUp Solutions",
+    price: 220.0,
+    rating: 4.5,
+    reviews: 2900,
+    image: "/pics/template_12-min.jpg",
+  },
+  {
+    id: "13",
+    item_name: "Portable Power Bank 20000mAh",
+    company_name: "ChargeFast Electronics",
+    price: 300.0,
+    rating: 4.8,
+    reviews: 7500,
+    image: "/pics/template_13-min.jpg",
+  },
+  {
+    id: "14",
+    item_name: "Bluetooth Noise-Cancelling Earbuds",
+    company_name: "SoundSphere Audio",
+    price: 400.0,
+    rating: 4.7,
+    reviews: 6200,
+    image: "/pics/template_14-min.jpg",
+  },
+  {
+    id: "15",
+    item_name: "Smart Home Security Camera",
+    company_name: "SecureLife Technologies",
+    price: 350.0,
+    rating: 4.6,
+    reviews: 4800,
+    image: "/pics/template_15-min.jpg",
+  },
+  {
+    id: "16",
+    item_name: "Digital Air Fryer with Touchscreen",
+    company_name: "KitchenPro Appliances",
+    price: 280.0,
+    rating: 4.9,
+    reviews: 9200,
+    image: "/pics/template_16-min.jpg",
+  },
+];

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Cricket Game</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+      * {
+        font-family: "Poppins", sans-serif;
+        font-style: normal;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      h1 {
+        /* margin: auto; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* text-align: center; */
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+      .btns {
+        margin: 50px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      main {
+        align-self: center;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+      }
+      button {
+        text-transform: uppercase;
+        /* padding: 5px 35px; */
+        width: 125px;
+        height: 35px;
+        border-radius: 5px;
+        background-color: lightgreen;
+        font-weight: 550;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+        /* transition: all 0.15s ease-in-out; */
+      }
+      button.clicked {
+        background-color: black;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Bat Ball Wicket Game</h1>
+      <div class="btns">
+        <button class="Bat">bat</button>
+        <button class="Ball">ball</button>
+        <button class="Wicket">wicket</button>
+      </div>
+    </main>
+    <script>
+      const Bat_Button = document.querySelector(".Bat");
+      let computerChoice;
+
+      Bat_Button.addEventListener("click", () => {
+        Bat_Button.classList.toggle("clicked");
+        let randomNumber = Math.random() * 3;
+        if (randomNumber > 0 && randomNumber <= 1) {
+          computerChoice = "bat";
+          // console.log(`The computer choice is ${computerChoice}`);
+        } else if (randomNumber > 1 && randomNumber <= 2) {
+          computerChoice = "ball";
+        } else {
+          computerChoice = "wicket";
+        }
+
+        if (computerChoice === "ball") {
+          alert(
+            `The User's choice is Bat. The Computer's choice is ${computerChoice}. The User's won. Congrats!`
+          );
+        }
+        if (computerChoice === "wicket") {
+          alert(
+            `The User's choice is Bat. The Computer's choice is ${computerChoice}. The Computer won. Congrats to Computer!`
+          );
+        }
+        if (computerChoice === "bat") {
+          alert(
+            `The User's choice is Bat. The Computer's choice is ${computerChoice}. The compition is tied. Congrats to both!`
+          );
+        }
+
+        setTimeout(() => {
+          Bat_Button.classList.remove("clicked");
+        }, 100);
+      });
+
+      // let randomNumber = Math.random() * 3;
+      // if (randomNumber > 3 && randomNumber <= 1) {
+      //   let computerChoice = "Bat";
+      //   console.log(`The computer choice is ${computerChoice}`);
+      // }
+
+      // document.querySelector(".Bat").onclick = () => {
+      //   alert("You have chosen the bat.");
+      //   console.log("You have chosen the bat.");
+      // };
+    </script>
+  </body>
+</html>

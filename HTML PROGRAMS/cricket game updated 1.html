@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+      h1 {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      * {
+        font-family: "Poppins", sans-serif;
+        font-style: normal;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      div {
+        width: 125px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: lightgreen;
+        border-radius: 5px;
+        text-align: center;
+        /* margin: auto; */
+        font-size: 17px;
+        font-weight: 550;
+        text-transform: uppercase;
+      }
+      div:hover {
+        color: white;
+        background-color: rgb(15, 15, 15);
+        cursor: pointer;
+      }
+      .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 30px;
+        gap: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>CRICKET GAME</h1>
+      <section class="buttons">
+        <div class="Bat">bat</div>
+        <div class="Ball">ball</div>
+        <div class="Stumps">stumps</div>
+      </section>
+    </main>
+    <script>
+      let Computers_choice;
+      function GenerateRandomNumber() {
+        let Random_Number = Math.random() * 3;
+        if (Random_Number > 0 && Random_Number <= 1) {
+          Computers_choice = "ball";
+        } else if (Random_Number > 1 && Random_Number <= 2) {
+          Computers_choice = "stumps";
+        } else {
+          Computers_choice = "bat";
+        }
+      }
+
+      let Bat_Button = document.querySelector(".Bat");
+      Bat_Button.addEventListener("click", () => {
+        GenerateRandomNumber();
+        // let Computers_choice;
+        if (Computers_choice === "bat") {
+          alert(
+            "The users choice is Bat and the Computers choice is bat so\nThe match is tied "
+          );
+        }
+        if (Computers_choice === "ball") {
+          alert(
+            `The computers choice is ball and the users choice is bat so\nThe user won.`
+          );
+        }
+        if (Computers_choice === "stumps") {
+          alert(
+            `The computers choice is stumps and the users choice is bat so\nThe computer won.`
+          );
+        }
+      });
+
+      let Ball_Button = document.querySelector(".Ball");
+      Ball_Button.addEventListener("click", () => {
+        GenerateRandomNumber();
+        // let Computers_choice;
+        if (Computers_choice === "ball") {
+          alert(
+            "The users choice is ball and the Computers choice is ball so\nThe match is tied "
+          );
+        }
+        if (Computers_choice === "bat") {
+          alert(
+            `The computers choice is bat and the users choice is ball so\nThe computer won.`
+          );
+        }
+        if (Computers_choice === "stumps") {
+          alert(
+            `The computers choice is stumps and the users choice is ball so\nThe computer won.`
+          );
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating Circle with Circular Progress</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Space between the circle and the progress bar */
+        }
+
+        .circular-progress-wrapper {
+            position: relative;
+            width: 80px; /* Size of the outer circle */
+            height: 80px; /* Size of the outer circle */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* This creates the circular progress effect */
+            background: conic-gradient(#333 0% 96%, #e0e0e0 96% 100%); /* 96% dark line, rest light gray */
+        }
+
+        .rating-circle {
+            width: 60px; /* Size of the inner circle */
+            height: 60px; /* Size of the inner circle */
+            background-color: #f0f0f0; /* Light gray background */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            /* No border here, the outer wrapper creates the ring */
+        }
+
+        .progress-bar-container {
+            width: 150px; /* Adjust the total width of the progress bar */
+            height: 8px; /* Height of the progress bar */
+            background-color: #e0e0e0; /* Light gray background for the empty part */
+            border-radius: 4px; /* Rounded corners for the container */
+            overflow: hidden; /* Ensures the fill stays within the rounded corners */
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #333; /* Black color for the filled part */
+            border-radius: 4px; /* Rounded corners for the fill */
+            /* The width will be set inline in HTML or dynamically via JavaScript */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="circular-progress-wrapper">
+            <div class="rating-circle">4.8</div>
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" style="width: 80%;"></div>
+        </div>
+    </div>
+</body>
+</html>

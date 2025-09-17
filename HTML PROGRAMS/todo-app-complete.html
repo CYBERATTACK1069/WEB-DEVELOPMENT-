@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complete To-Do List App</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        font-weight: 300;
+      }
+
+      .header p {
+        opacity: 0.9;
+        font-size: 1.1rem;
+      }
+
+      .input-section {
+        padding: 30px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .input-container {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      #todoInput {
+        flex: 1;
+        padding: 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+      }
+
+      #todoInput:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      #addBtn {
+        padding: 15px 25px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: transform 0.2s ease;
+      }
+
+      #addBtn:hover {
+        transform: translateY(-2px);
+      }
+
+      .filter-section {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .filter-btn {
+        padding: 10px 20px;
+        border: 2px solid #667eea;
+        background: white;
+        color: #667eea;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .filter-btn.active,
+      .filter-btn:hover {
+        background: #667eea;
+        color: white;
+      }
+
+      .todo-list {
+        padding: 20px 30px 30px;
+        min-height: 200px;
+      }
+
+      .todo-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        margin-bottom: 10px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border-left: 4px solid #667eea;
+        transition: all 0.3s ease;
+        animation: slideIn 0.3s ease;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .todo-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .todo-item.completed {
+        opacity: 0.7;
+        border-left-color: #28a745;
+      }
+
+      .todo-item.completed .todo-text {
+        text-decoration: line-through;
+        color: #6c757d;
+      }
+
+      .todo-checkbox {
+        width: 20px;
+        height: 20px;
+        margin-right: 15px;
+        cursor: pointer;
+        accent-color: #667eea;
+      }
+
+      .todo-text {
+        flex: 1;
+        font-size: 16px;
+        line-height: 1.5;
+        word-wrap: break-word;
+      }
+
+      .todo-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .edit-btn,
+      .delete-btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .edit-btn {
+        background: #ffc107;
+        color: #212529;
+      }
+
+      .edit-btn:hover {
+        background: #e0a800;
+      }
+
+      .delete-btn {
+        background: #dc3545;
+        color: white;
+      }
+
+      .delete-btn:hover {
+        background: #c82333;
+      }
+
+      .stats {
+        padding: 20px 30px;
+        background: #f8f9fa;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        color: #6c757d;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: #6c757d;
+      }
+
+      .empty-state img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 20px;
+        opacity: 0.5;
+      }
+
+      .edit-input {
+        flex: 1;
+        padding: 10px;
+        border: 2px solid #667eea;
+        border-radius: 6px;
+        font-size: 16px;
+        margin-right: 15px;
+      }
+
+      .save-btn,
+      .cancel-btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        margin-left: 5px;
+      }
+
+      .save-btn {
+        background: #28a745;
+        color: white;
+      }
+
+      .cancel-btn {
+        background: #6c757d;
+        color: white;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          margin: 10px;
+          border-radius: 10px;
+        }
+
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .input-container {
+          flex-direction: column;
+        }
+
+        .filter-section {
+          flex-wrap: wrap;
+        }
+
+        .stats {
+          flex-direction: column;
+          gap: 10px;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>📝 My To-Do List</h1>
+        <p>Stay organized and productive</p>
+      </div>
+
+      <div class="input-section">
+        <div class="input-container">
+          <input
+            type="text"
+            id="todoInput"
+            placeholder="Add a new task..."
+            maxlength="200"
+          />
+          <button id="addBtn">Add Task</button>
+        </div>
+
+        <div class="filter-section">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="active">Active</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+      </div>
+
+      <div class="todo-list" id="todoList">
+        <div class="empty-state" id="emptyState">
+          <div style="font-size: 4rem; margin-bottom: 20px">📋</div>
+          <h3>No tasks yet!</h3>
+          <p>Add a task above to get started</p>
+        </div>
+      </div>
+
+      <div class="stats" id="stats">
+        <span id="totalTasks">0 tasks</span>
+        <span id="completedTasks">0 completed</span>
+        <button
+          id="clearCompleted"
+          style="
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+          "
+        >
+          Clear Completed
+        </button>
+      </div>
+    </div>
+
+    <script>
+      class TodoApp {
+        constructor() {
+          this.todos = JSON.parse(localStorage.getItem("todos")) || [];
+          this.currentFilter = "all";
+          this.editingId = null;
+
+          this.initializeElements();
+          this.bindEvents();
+          this.render();
+        }
+
+        initializeElements() {
+          this.todoInput = document.getElementById("todoInput");
+          this.addBtn = document.getElementById("addBtn");
+          this.todoList = document.getElementById("todoList");
+          this.emptyState = document.getElementById("emptyState");
+          this.filterBtns = document.querySelectorAll(".filter-btn");
+          this.totalTasks = document.getElementById("totalTasks");
+          this.completedTasks = document.getElementById("completedTasks");
+          this.clearCompletedBtn = document.getElementById("clearCompleted");
+        }
+
+        bindEvents() {
+          this.addBtn.addEventListener("click", () => this.addTodo());
+          this.todoInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") this.addTodo();
+          });
+
+          this.filterBtns.forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+              this.setFilter(e.target.dataset.filter);
+            });
+          });
+
+          this.clearCompletedBtn.addEventListener("click", () =>
+            this.clearCompleted()
+          );
+        }
+
+        addTodo() {
+          const text = this.todoInput.value.trim();
+          if (!text) return;
+
+          const todo = {
+            id: Date.now(),
+            text: text,
+            completed: false,
+            createdAt: new Date().toISOString(),
+          };
+
+          this.todos.unshift(todo);
+          this.todoInput.value = "";
+          this.saveTodos();
+          this.render();
+        }
+
+        deleteTodo(id) {
+          this.todos = this.todos.filter((todo) => todo.id !== id);
+          this.saveTodos();
+          this.render();
+        }
+
+        toggleTodo(id) {
+          const todo = this.todos.find((todo) => todo.id === id);
+          if (todo) {
+            todo.completed = !todo.completed;
+            this.saveTodos();
+            this.render();
+          }
+        }
+
+        editTodo(id) {
+          this.editingId = id;
+          this.render();
+        }
+
+        saveTodoEdit(id, newText) {
+          const todo = this.todos.find((todo) => todo.id === id);
+          if (todo && newText.trim()) {
+            todo.text = newText.trim();
+            this.editingId = null;
+            this.saveTodos();
+            this.render();
+          }
+        }
+
+        cancelEdit() {
+          this.editingId = null;
+          this.render();
+        }
+
+        setFilter(filter) {
+          this.currentFilter = filter;
+          this.filterBtns.forEach((btn) => {
+            btn.classList.toggle("active", btn.dataset.filter === filter);
+          });
+          this.render();
+        }
+
+        clearCompleted() {
+          this.todos = this.todos.filter((todo) => !todo.completed);
+          this.saveTodos();
+          this.render();
+        }
+
+        getFilteredTodos() {
+          switch (this.currentFilter) {
+            case "active":
+              return this.todos.filter((todo) => !todo.completed);
+            case "completed":
+              return this.todos.filter((todo) => todo.completed);
+            default:
+              return this.todos;
+          }
+        }
+
+        saveTodos() {
+          localStorage.setItem("todos", JSON.stringify(this.todos));
+        }
+
+        render() {
+          const filteredTodos = this.getFilteredTodos();
+
+          // Update stats
+          const total = this.todos.length;
+          const completed = this.todos.filter((todo) => todo.completed).length;
+
+          this.totalTasks.textContent = `${total} task${
+            total !== 1 ? "s" : ""
+          }`;
+          this.completedTasks.textContent = `${completed} completed`;
+
+          // Show/hide clear completed button
+          this.clearCompletedBtn.style.display =
+            completed > 0 ? "block" : "none";
+
+          // Render todos
+          if (filteredTodos.length === 0) {
+            this.todoList.innerHTML = `
+                        <div class="empty-state">
+                            <div style="font-size: 4rem; margin-bottom: 20px;">
+                                ${
+                                  this.currentFilter === "completed"
+                                    ? "✅"
+                                    : this.currentFilter === "active"
+                                    ? "📋"
+                                    : "📋"
+                                }
+                            </div>
+                            <h3>${this.getEmptyMessage()}</h3>
+                            <p>${this.getEmptySubMessage()}</p>
+                        </div>
+                    `;
+          } else {
+            this.todoList.innerHTML = filteredTodos
+              .map((todo) => this.renderTodoItem(todo))
+              .join("");
+          }
+        }
+
+        getEmptyMessage() {
+          switch (this.currentFilter) {
+            case "active":
+              return "No active tasks!";
+            case "completed":
+              return "No completed tasks!";
+            default:
+              return "No tasks yet!";
+          }
+        }
+
+        getEmptySubMessage() {
+          switch (this.currentFilter) {
+            case "active":
+              return "All tasks are completed! 🎉";
+            case "completed":
+              return "Complete some tasks to see them here";
+            default:
+              return "Add a task above to get started";
+          }
+        }
+
+        renderTodoItem(todo) {
+          if (this.editingId === todo.id) {
+            return `
+                        <div class="todo-item">
+                            <input type="checkbox" class="todo-checkbox" ${
+                              todo.completed ? "checked" : ""
+                            } 
+                                   onchange="todoApp.toggleTodo(${todo.id})">
+                            <input type="text" class="edit-input" value="${
+                              todo.text
+                            }" 
+                                   id="editInput${todo.id}" maxlength="200">
+                            <div class="todo-actions">
+                                <button class="save-btn" onclick="todoApp.saveTodoEdit(${
+                                  todo.id
+                                }, document.getElementById('editInput${
+              todo.id
+            }').value)">Save</button>
+                                <button class="cancel-btn" onclick="todoApp.cancelEdit()">Cancel</button>
+                            </div>
+                        </div>
+                    `;
+          }
+
+          return `
+                    <div class="todo-item ${todo.completed ? "completed" : ""}">
+                        <input type="checkbox" class="todo-checkbox" ${
+                          todo.completed ? "checked" : ""
+                        } 
+                               onchange="todoApp.toggleTodo(${todo.id})">
+                        <span class="todo-text">${this.escapeHtml(
+                          todo.text
+                        )}</span>
+                        <div class="todo-actions">
+                            <button class="edit-btn" onclick="todoApp.editTodo(${
+                              todo.id
+                            })">Edit</button>
+                            <button class="delete-btn" onclick="todoApp.deleteTodo(${
+                              todo.id
+                            })">Delete</button>
+                        </div>
+                    </div>
+                `;
+        }
+
+        escapeHtml(text) {
+          const div = document.createElement("div");
+          div.textContent = text;
+          return div.innerHTML;
+        }
+      }
+
+      // Initialize the app
+      const todoApp = new TodoApp();
+
+      // Add some keyboard shortcuts
+      document.addEventListener("keydown", (e) => {
+        // Escape key to cancel editing
+        if (e.key === "Escape" && todoApp.editingId) {
+          todoApp.cancelEdit();
+        }
+
+        // Focus input with Ctrl/Cmd + /
+        if ((e.ctrlKey || e.metaKey) && e.key === "/") {
+          e.preventDefault();
+          todoApp.todoInput.focus();
+        }
+      });
+
+      // Auto-focus the input when page loads
+      window.addEventListener("load", () => {
+        todoApp.todoInput.focus();
+      });
+    </script>
+  </body>
+</html>

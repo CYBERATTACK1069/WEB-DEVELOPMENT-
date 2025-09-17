@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Growth Fund Card</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #121212;
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+      }
+      .card {
+        background-color: #1a1a1a;
+        border-radius: 8px;
+        padding: 10px;
+        width: 424px;
+        box-sizing: border-box;
+        color: #ffffff;
+        display: flex;
+        gap: 20px;
+      }
+      .left-column,
+      .right-column {
+        display: flex;
+        flex-direction: column;
+      }
+      .left-column {
+        width: 65%;
+      }
+      .right-column {
+        width: 35%;
+        align-items: flex-end;
+      }
+      .icon {
+        font-size: 26px;
+        margin-bottom: 8px;
+      }
+      .title {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0 0 8px 0;
+      }
+      .category {
+        color: #838383;
+        font-size: 13px;
+        margin-bottom: 20px;
+      }
+      .profit-label {
+        color: #838383;
+        font-size: 13px;
+        margin-bottom: 4px;
+      }
+      .amount {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .details-btn,
+      .add-more-btn {
+        width: 100%;
+        border: none;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        padding: 8px 16px;
+        text-align: center;
+        box-sizing: border-box;
+      }
+      .details-btn {
+        background-color: #00c853;
+        color: #ffffff;
+        margin-bottom: 8px;
+      }
+      .add-more-btn {
+        background-color: #ffffff;
+        color: #000000;
+        font-weight: 400;
+      }
+      .last-updated {
+        color: #828282;
+        font-size: 10px;
+        text-align: center;
+        margin-top: 8px;
+        line-height: 1.6;
+        white-space: pre-line;
+      }
+      .right-column .spacer {
+        flex-grow: 1;
+      }
+      .gain-label {
+        color: #838383;
+        font-size: 13px;
+        text-align: center;
+        margin-bottom: 4px;
+      }
+      .gain-percentage {
+        color: #4ade80;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="left-column">
+        <div class="icon">💻</div>
+        <h2 class="title">Tech Growth Fund</h2>
+        <p class="category">Technology</p>
+        <p class="profit-label">Profit Earned</p>
+        <p class="amount">$25,000,000.00</p>
+      </div>
+      <div class="right-column">
+        <button class="details-btn">Details</button>
+        <button class="add-more-btn">Add More</button>
+        <p class="last-updated">last updated since : 01-01-2025</p>
+        <div class="spacer"></div>
+        <p class="gain-label">Gain %</p>
+        <p class="gain-percentage">+12.5%</p>
+      </div>
+    </div>
+  </body>
+</html>

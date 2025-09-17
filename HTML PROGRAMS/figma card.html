@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Interactive Card</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+      
+      :root {
+        --primary: #6C63FF;
+        --primary-dark: #5A52D9;
+        --secondary: #2EC4B6;
+        --dark: #222831;
+        --light: #F8F9FA;
+        --gray: #E0E0E0;
+        --success: #38ef7d;
+        --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      
+      * {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 20px;
+      }
+      
+      .card {
+        background: var(--light);
+        border-radius: 16px;
+        box-shadow: var(--card-shadow);
+        padding: 30px;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        transform: translateY(0);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      }
+      
+      .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+      }
+      
+      .card-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 20px;
+      }
+      
+      .button {
+        width: auto;
+        min-width: 150px;
+        height: 48px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 30px auto 0;
+        padding: 0 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+      }
+      
+      .button::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.5s, height 0.5s;
+      }
+      
+      .button:hover {
+        background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+        box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
+      }
+      
+      .button:active::after {
+        width: 300px;
+        height: 300px;
+        opacity: 0;
+      }
+      
+      .output_line {
+        margin-top: 25px;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: var(--gray);
+        color: var(--dark);
+        font-weight: 500;
+        min-height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      
+      .output_line.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      @media (max-width: 480px) {
+        .card {
+          padding: 20px;
+        }
+        
+        .card-title {
+          font-size: 20px;
+        }
+        
+        .button {
+          min-width: 130px;
+          height: 42px;
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2 class="card-title">Interactive Demo</h2>
+      <div class="button">Click Me</div>
+      <div class="output_line"></div>
+    </div>
+
+    <script>
+      const btn = document.querySelector(".button");
+      const output = document.querySelector(".output_line");
+      
+      btn.addEventListener("click", () => {
+        const currentTime = new Date().toLocaleTimeString();
+        output.textContent = `Button was clicked at ${currentTime}`;
+        output.classList.add("active");
+        
+        // Add ripple effect
+        const ripple = document.createElement("span");
+        ripple.style.position = "absolute";
+        ripple.style.borderRadius = "50%";
+        ripple.style.transform = "scale(0)";
+        ripple.style.animation = "ripple 0.6s linear";
+        ripple.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
+        
+        const rect = btn.getBoundingClientRect();
+        ripple.style.width = ripple.style.height = `${Math.max(rect.width, rect.height) * 2}px`;
+        ripple.style.left = `${event.clientX - rect.left - ripple.offsetWidth / 2}px`;
+        ripple.style.top = `${event.clientY - rect.top - ripple.offsetHeight / 2}px`;
+        
+        btn.appendChild(ripple);
+        
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+      });
+      
+      // Add this to your CSS
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes ripple {
+          to {
+            transform: scale(4);
+            opacity: 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>

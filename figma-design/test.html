@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CA Accountant - Create Ledger</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-blue: #3b82f6;
+        --sidebar-bg: #1e293b;
+        --content-bg: #f1f5f9;
+        --text-light: #cbd5e1;
+        --text-dark: #1e293b;
+        --border-color: #e2e8f0;
+        --white: #ffffff;
+        --input-bg: #f8fafc;
+        --text-muted: #64748b;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--content-bg);
+        margin: 0;
+        display: flex;
+        height: 100vh;
+        color: var(--text-dark);
+      }
+
+      .sidebar {
+        width: 260px;
+        background-color: var(--sidebar-bg);
+        color: var(--text-light);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+      }
+
+      .sidebar .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+      }
+
+      .sidebar .logo i {
+        margin-right: 10px;
+        color: var(--primary-blue);
+      }
+
+      .sidebar nav {
+        flex-grow: 1;
+      }
+
+      .sidebar nav a {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        text-decoration: none;
+        color: var(--text-light);
+        font-weight: 500;
+        transition: background-color 0.2s, color 0.2s;
+      }
+
+      .sidebar nav a i {
+        width: 20px;
+        margin-right: 12px;
+        text-align: center;
+      }
+
+      .sidebar nav a:hover {
+        background-color: #334155;
+      }
+
+      .sidebar nav a.active {
+        background-color: var(--primary-blue);
+        color: var(--white);
+      }
+
+      .sidebar .create-new-btn {
+        background-color: var(--primary-blue);
+        color: var(--white);
+        padding: 12px;
+        border-radius: 6px;
+        text-align: center;
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .sidebar .create-new-btn i {
+        margin-right: 8px;
+      }
+
+      .sidebar .user-profile {
+        margin-top: auto;
+        padding-top: 20px;
+        border-top: 1px solid #334155;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .sidebar .user-info {
+        display: flex;
+        align-items: center;
+      }
+
+      .sidebar .user-info img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 12px;
+      }
+
+      .sidebar .user-details .name {
+        font-weight: 600;
+        color: var(--white);
+      }
+
+      .sidebar .user-details .email {
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .sidebar .logout-btn {
+        color: var(--text-light);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      .main-content {
+        flex-grow: 1;
+        padding: 40px;
+        overflow-y: auto;
+      }
+
+      .main-content header {
+        margin-bottom: 30px;
+      }
+
+      .main-content header h1 {
+        font-size: 32px;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .form-container {
+        background-color: var(--white);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        padding: 32px;
+        max-width: 700px;
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+      }
+
+      .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .form-group input[type="text"],
+      .form-group select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background-color: var(--input-bg);
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+      }
+
+      .radio-group {
+        display: flex;
+        gap: 20px;
+      }
+
+      .radio-group label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .radio-group input[type="radio"] {
+        margin-right: 8px;
+      }
+
+      .form-actions {
+        margin-top: 32px;
+      }
+
+      .create-ledger-btn {
+        background-color: var(--primary-blue);
+        color: var(--white);
+        padding: 12px 24px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="logo">
+        <i class="fas fa-calculator"></i>
+        <span>CA Accountant</span>
+      </div>
+      <nav>
+        <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="#" class="active"><i class="fas fa-book"></i> Ledgers</a>
+        <a href="#"><i class="fas fa-file-invoice"></i> Journals</a>
+        <a href="#"><i class="fas fa-balance-scale"></i> Trial Balance</a>
+        <a href="#"><i class="fas fa-file-invoice-dollar"></i> Balance Sheet</a>
+        <a href="#"><i class="fas fa-chart-line"></i> Profit & Loss</a>
+        <a href="#"><i class="fas fa-university"></i> Bank Reconciliation</a>
+      </nav>
+      <a href="#" class="create-new-btn"
+        ><i class="fas fa-plus"></i> Create New</a
+      >
+      <div class="user-profile">
+        <div class="user-info">
+          <img src="https://i.pravatar.cc/40" alt="User Avatar" />
+          <div class="user-details">
+            <span class="name">John</span>
+            <span class="email">john@gmail.com</span>
+          </div>
+        </div>
+        <button class="logout-btn" title="Logout">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header>
+        <h1>Create New Ledger</h1>
+      </header>
+
+      <div class="form-container">
+        <form>
+          <div class="form-group">
+            <label for="ledger-name">Name</label>
+            <input
+              type="text"
+              id="ledger-name"
+              placeholder="E.g. Salaries, Sales"
+            />
+          </div>
+          <div class="form-group">
+            <label for="ledger-group">Group</label>
+            <select id="ledger-group">
+              <option>Select group</option>
+              <option>Indirect Expenses</option>
+              <option>Direct Incomes</option>
+              <option>Fixed Assets</option>
+              <option>Loans (Liability)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="opening-balance">Opening Balance</label>
+            <input
+              type="text"
+              id="opening-balance"
+              placeholder="Enter opening balance"
+            />
+          </div>
+          <div class="form-group">
+            <label>Type</label>
+            <div class="radio-group">
+              <label>
+                <input type="radio" name="ledger-type" value="debit" checked />
+                Debit
+              </label>
+              <label>
+                <input type="radio" name="ledger-type" value="credit" />
+                Credit
+              </label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="create-ledger-btn">
+              Create Ledger
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

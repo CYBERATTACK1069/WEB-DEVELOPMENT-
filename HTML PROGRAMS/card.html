@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monthly Savings Card</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Inter:wght@600&display=swap");
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f2f5;
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .card {
+        background-color: #121212;
+        border-radius: 5px;
+        padding: 20px;
+        width: 350px;
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .card-title {
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: uppercase;
+        margin: 0;
+      }
+
+      .card-amount {
+        font-size: 22px;
+        font-weight: 600;
+        text-align: right;
+        margin: 0;
+      }
+
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .increment-text {
+        font-size: 11px;
+        font-weight: 400;
+        color: #8b8b8b;
+      }
+
+      .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .last-updated {
+        font-size: 12px;
+        font-weight: 400;
+        color: #8b8b8b;
+      }
+
+      .view-details-btn {
+        background-color: #00c853;
+        border: none;
+        border-radius: 3px;
+        padding: 8px 12px;
+        font-family: "Inter", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        color: #ffffff;
+        cursor: pointer;
+        box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">monthly savings</h2>
+        <p class="card-amount">$124,500.00</p>
+      </div>
+      <div class="card-body">
+        <p class="increment-text">2.5 % increment since the last week</p>
+      </div>
+      <div class="card-footer">
+        <p class="last-updated">last updated since : 01-01-2025</p>
+        <button class="view-details-btn">VIEW DETAILS</button>
+      </div>
+    </div>
+  </body>
+</html>

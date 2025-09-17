@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Financial Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ["Inter", "sans-serif"],
+                    },
+                    colors: {
+                        primary: "#4318D1",
+                        success: "#00C853",
+                        danger: "#FF3D00",
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+
+<body class="font-inter">
+    <div x-data="{
+      activeTab: 'overview',
+      metrics: {
+        totalBalance: 124500.00,
+        income: 45000.00,
+        expenses: 28500.00,
+        investments: 51000.00
+      },
+      transactions: [
+        { date: '2024-01-15', description: 'Salary Deposit', amount: 5000.00, type: 'income' },
+        { date: '2024-01-14', description: 'Investment Return', amount: 1200.00, type: 'income' },
+        { date: '2024-01-13', description: 'Utility Bill', amount: -250.00, type: 'expense' },
+        { date: '2024-01-12', description: 'Stock Purchase', amount: -2000.00, type: 'investment' }
+      ],
+      toggleMetricView(metric) {
+        this.activeMetric = metric;
+      }
+    }" class="flex flex-col w-screen h-screen bg-[#F0F0F0] text-[#121212]">
+        <header class="flex items-center justify-between p-[20px] border-b-[1px] border-[#000000] bg-[#FFFFFF]"
+            role="banner">
+            <div class="flex items-center gap-[15px]">
+                <h1 class="text-[22px] font-bold">Financial Dashboard</h1>
+                <nav class="flex items-center gap-[10px]" role="navigation" aria-label="Main Navigation">
+                    <button x-on:click="activeTab = 'overview'"
+                        x-bind:style="{ background: activeTab === 'overview' ? '#4318D1' : '#FFFFFF', color: activeTab === 'overview' ? '#FFFFFF' : '#121212' }"
+                        class="px-[20px] py-[10px] rounded-[6px] font-semibold shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]"
+                        aria-pressed="true" x-bind:aria-pressed="activeTab === 'overview'">
+                        Overview
+                    </button>
+                    <button x-on:click="activeTab = 'transactions'"
+                        x-bind:style="{ background: activeTab === 'transactions' ? '#4318D1' : '#FFFFFF', color: activeTab === 'transactions' ? '#FFFFFF' : '#121212' }"
+                        class="px-[20px] py-[10px] rounded-[6px] font-semibold shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]"
+                        aria-pressed="false" x-bind:aria-pressed="activeTab === 'transactions'">
+                        Transactions
+                    </button>
+                    <button x-on:click="activeTab = 'investments'"
+                        x-bind:style="{ background: activeTab === 'investments' ? '#4318D1' : '#FFFFFF', color: activeTab === 'investments' ? '#FFFFFF' : '#121212' }"
+                        class="px-[20px] py-[10px] rounded-[6px] font-semibold shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]"
+                        aria-pressed="false" x-bind:aria-pressed="activeTab === 'investments'">
+                        Investments
+                    </button>
+                </nav>
+            </div>
+            <div class="flex items-center gap-[15px]">
+                <div class="relative">
+                    <label for="search-transactions" class="sr-only">Search transactions</label>
+                    <input id="search-transactions" type="search" placeholder="Search transactions..."
+                        class="w-[300px] px-[15px] py-[10px] rounded-[6px] border-[1px] border-[#000000] shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]" />
+                </div>
+                <button
+                    class="px-[20px] py-[10px] rounded-[6px] bg-[#00C853] text-[#FFFFFF] font-semibold shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]"
+                    aria-label="Create new transaction">
+                    + New Transaction
+                </button>
+            </div>
+        </header>
+
+        <main class="flex-1 p-[20px] overflow-auto" role="main">
+            <!-- Overview Tab -->
+            <section x-show="activeTab === 'overview'" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[20px]"
+                role="tabpanel" aria-labelledby="tab-overview" x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
+                <!-- Total Balance Card -->
+                <article class="bg-[#FFFFFF] p-[20px] rounded-[6px] shadow-[1px_1px_1px_1px_rgba(0,0,0,0.25)]">
+                    <h3 class="text-[15px] font-normal uppercase mb-[10px]">
+                        Total Balance
+                    </h3>
+                    <p class="text-[24px] font-bold">$124,500.00</p>
+                    <div class="mt-[20px] flex justify-between items-center">
+                        <span class="text-[14px] text-[#666666]">+2.5% from last month</span>
+                        <button
+                            class="px-[15px] py-[8px] rounded-[3px] bg-[#00C853] text-[#FFFFFF] font-semibold shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]"
+                            aria-label="View balance details">
+                            View Details
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Monthly Income Card -->
+                <article class="bg-[#FFFFFF] p-[20px] rounded-[6px] shadow-[1px_1px_1px_1px_rgba(0,0,0,0.25)]">
+                    <h3 class="text-[15px] font-normal uppercase mb-[10px]">
+                        Monthly Income
+                    </h3>
+                    <p class="text-[24px] font-bold">$45,000.00</p>
+                    <div class="mt-[20px] flex justify-between items-center">
+                        <span class="text-[14px] text-[#666666]">+5.8% from last month</span>
+                        <button
+                            class="px-[15px] py-[8px] rounded-[3px] bg-[#00C853] text-[#FFFFFF] font-semibold shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]"
+                            aria-label="View income details">
+                            View Details
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Monthly Expenses Card -->
+                <article class="bg-[#FFFFFF] p-[20px] rounded-[6px] shadow-[1px_1px_1px_1px_rgba(0,0,0,0.25)]">
+                    <h3 class="text-[15px] font-normal uppercase mb-[10px]">
+                        Monthly Expenses
+                    </h3>
+                    <p class="text-[24px] font-bold">$28,500.00</p>
+                    <div class="mt-[20px] flex justify-between items-center">
+                        <span class="text-[14px] text-[#666666]">-1.2% from last month</span>
+                        <button
+                            class="px-[15px] py-[8px] rounded-[3px] bg-[#FF3D00] text-[#FFFFFF] font-semibold shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]"
+                            aria-label="Manage your expenses">
+                            Manage Expenses
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Recent Transactions Card -->
+                <article
+                    class="col-span-1 md:col-span-2 bg-[#FFFFFF] p-[20px] rounded-[6px] shadow-[1px_1px_1px_1px_rgba(0,0,0,0.25)]">
+                    <h3 class="text-[16px] font-normal uppercase mb-[15px]">
+                        Recent Transactions
+                    </h3>
+                    <div class="flex flex-col gap-[10px]">
+                        <template x-for="transaction in transactions" :key="transaction.date + transaction.description">
+                            <div
+                                class="flex justify-between items-center p-[10px] bg-[#F9F9F9] rounded-[3px] shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]">
+                                <div>
+                                    <p class="font-semibold" x-text="transaction.description"></p>
+                                    <span class="text-[14px] text-[#666666]" x-text="transaction.date"></span>
+                                </div>
+                                <p class="font-bold" x-text="'$' + Math.abs(transaction.amount).toFixed(2)"
+                                    x-bind:class="transaction.amount > 0 ? 'text-[#00C853]' : 'text-[#FF3D00]'"></p>
+                            </div>
+                        </template>
+                    </div>
+                    <button
+                        class="mt-[15px] px-[15px] py-[8px] rounded-[3px] bg-[#00C853] text-[#FFFFFF] font-semibold shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]"
+                        aria-label="View all transactions">
+                        View All Transactions
+                    </button>
+                </article>
+
+                <!-- Investment Portfolio Card -->
+                <article class="bg-[#FFFFFF] p-[20px] rounded-[6px] shadow-[1px_1px_1px_1px_rgba(0,0,0,0.25)]">
+                    <h3 class="text-[16px] font-normal uppercase mb-[15px]">
+                        Investment Portfolio
+                    </h3>
+                    <div class="flex flex-col gap-[15px]">
+                        <div class="p-[15px] bg-[#F9F9F9] rounded-[3px] shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]">
+                            <h4 class="font-semibold">Total Investments</h4>
+                            <p class="text-[24px] font-bold">$51,000.00</p>
+                        </div>
+                        <div class="p-[15px] bg-[#F9F9F9] rounded-[3px] shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]">
+                            <h4 class="font-semibold">Returns (YTD)</h4>
+                            <p class="text-[24px] font-bold text-[#00C853]">+$4,250.00</p>
+                        </div>
+                    </div>
+                    <button
+                        class="mt-[15px] px-[15px] py-[8px] rounded-[3px] bg-[#00C853] text-[#FFFFFF] font-semibold shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]"
+                        aria-label="Manage your investment portfolio">
+                        Manage Portfolio
+                    </button>
+                </article>
+            </section>
+
+            <!-- Transactions Tab -->
+            <section x-show="activeTab === 'transactions'"
+                class="bg-[#FFFFFF] p-[20px] rounded-[6px] shadow-[1px_1px_1px_1px_rgba(0,0,0,0.25)]" role="tabpanel"
+                aria-labelledby="tab-transactions" x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
+                <h2 class="text-[20px] font-bold mb-[20px]">All Transactions</h2>
+                <div class="flex flex-col gap-[10px]">
+                    <template x-for="transaction in transactions" :key="transaction.date + transaction.description">
+                        <div
+                            class="flex justify-between items-center p-[15px] bg-[#F9F9F9] rounded-[3px] shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]">
+                            <div>
+                                <p class="font-semibold" x-text="transaction.description"></p>
+                                <span class="text-[14px] text-[#666666]" x-text="transaction.date"></span>
+                            </div>
+                            <div class="flex items-center gap-[10px]">
+                                <span class="px-[10px] py-[5px] rounded-[3px] text-[14px]" x-text="transaction.type"
+                                    x-bind:class="{
+                    'bg-[#E6F7ED] text-[#00C853]': transaction.type === 'income',
+                    'bg-[#FFEBEE] text-[#FF3D00]': transaction.type === 'expense',
+                    'bg-[#E3F2FD] text-[#2196F3]': transaction.type === 'investment'
+                  }"></span>
+                                <p class="font-bold" x-text="'$' + Math.abs(transaction.amount).toFixed(2)"
+                                    x-bind:class="transaction.amount > 0 ? 'text-[#00C853]' : 'text-[#FF3D00]'"></p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </section>
+
+            <!-- Investments Tab -->
+            <section x-show="activeTab === 'investments'"
+                class="bg-[#FFFFFF] p-[20px] rounded-[6px] shadow-[1px_1px_1px_1px_rgba(0,0,0,0.25)]" role="tabpanel"
+                aria-labelledby="tab-investments" x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
+                <h2 class="text-[20px] font-bold mb-[20px]">Investment Portfolio</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-[20px]">
+                    <article class="p-[20px] bg-[#F9F9F9] rounded-[6px] shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]">
+                        <h3 class="text-[16px] font-semibold mb-[10px]">Stocks</h3>
+                        <p class="text-[24px] font-bold">$35,000.00</p>
+                        <span class="text-[14px] text-[#00C853]">+8.5% YTD</span>
+                    </article>
+                    <article class="p-[20px] bg-[#F9F9F9] rounded-[6px] shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]">
+                        <h3 class="text-[16px] font-semibold mb-[10px]">Bonds</h3>
+                        <p class="text-[24px] font-bold">$12,000.00</p>
+                        <span class="text-[14px] text-[#00C853]">+3.2% YTD</span>
+                    </article>
+                    <article class="p-[20px] bg-[#F9F9F9] rounded-[6px] shadow-[1px_1px_1px_0px_rgba(0,0,0,0.25)]">
+                        <h3 class="text-[16px] font-semibold mb-[10px]">Real Estate</h3>
+                        <p class="text-[24px] font-bold">$4,000.00</p>
+                        <span class="text-[14px] text-[#FF3D00]">-1.5% YTD</span>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

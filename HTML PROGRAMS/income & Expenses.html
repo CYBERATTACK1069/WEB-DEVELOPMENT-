@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expenses Tracker</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#6366f1", secondary: "#8b5cf6" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <style>
+      :where([class^="ri-"])::before {
+        content: "\f3c2";
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f9fafb;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      .custom-checkbox {
+        position: relative;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border: 2px solid #e2e8f0;
+        border-radius: 4px;
+        transition: all 0.2s;
+      }
+      .custom-checkbox.checked {
+        background-color: #6366f1;
+        border-color: #6366f1;
+      }
+      .custom-checkbox.checked::after {
+        content: "";
+        position: absolute;
+        left: 6px;
+        top: 2px;
+        width: 6px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+      .custom-switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 24px;
+      }
+      .custom-switch-input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .custom-switch-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #e2e8f0;
+        transition: 0.4s;
+        border-radius: 24px;
+      }
+      .custom-switch-slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      .custom-switch-input:checked + .custom-switch-slider {
+        background-color: #6366f1;
+      }
+      .custom-switch-input:checked + .custom-switch-slider:before {
+        transform: translateX(20px);
+      }
+      .custom-range {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 6px;
+        border-radius: 5px;
+        background: #e2e8f0;
+        outline: none;
+      }
+      .custom-range::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #6366f1;
+        cursor: pointer;
+      }
+      .custom-range::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #6366f1;
+        cursor: pointer;
+        border: none;
+      }
+      .progress-ring {
+        transform: rotate(-90deg);
+      }
+      .progress-ring__circle {
+        stroke-dasharray: 283;
+        transition: stroke-dashoffset 0.35s;
+        transform-origin: 50% 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="bg-white shadow-sm py-4 px-6">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full"
+            >
+              <i class="ri-wallet-3-line text-primary text-xl"></i>
+            </div>
+            <h1 class="text-xl font-semibold text-gray-800">
+              Income & Expenses
+            </h1>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="relative">
+              <button
+                id="notificationBtn"
+                class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100"
+              >
+                <i class="ri-notification-3-line text-gray-600 text-xl"></i>
+              </button>
+              <div
+                class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"
+              ></div>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+              <img
+                src="https://readdy.ai/api/search-image?query=professional%20headshot%20of%20a%20young%20professional%20with%20a%20friendly%20smile%2C%20high%20quality%20portrait%20photo%2C%20soft%20lighting%2C%20neutral%20background&width=100&height=100&seq=1&orientation=squarish"
+                alt="Profile"
+                class="w-full h-full object-cover object-top"
+              />
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- Main Content -->
+      <main class="flex-1 py-6 px-6">
+        <div class="max-w-6xl mx-auto">
+          <!-- Period Selector -->
+          <div class="flex justify-between items-center mb-6">
+            <div class="relative">
+              <button
+                id="periodSelector"
+                class="flex items-center gap-2 text-gray-800 font-medium px-3 py-2 rounded-lg hover:bg-gray-100 !rounded-button whitespace-nowrap"
+              >
+                <span>April 2025</span>
+                <i class="ri-arrow-down-s-line"></i>
+              </button>
+              <div
+                id="periodDropdown"
+                class="hidden absolute top-full left-0 mt-1 bg-white shadow-lg rounded-lg py-2 w-48 z-10"
+              >
+                <div class="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                  March 2025
+                </div>
+                <div class="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                  February 2025
+                </div>
+                <div class="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                  January 2025
+                </div>
+                <div class="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                  December 2024
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <button
+                class="flex items-center gap-2 text-gray-600 px-3 py-2 rounded-lg hover:bg-gray-100 !rounded-button whitespace-nowrap"
+              >
+                <i class="ri-download-line"></i>
+                <span>Export</span>
+              </button>
+              <div class="flex items-center gap-3">
+                <button
+                  class="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 !rounded-button whitespace-nowrap"
+                >
+                  <i class="ri-add-line"></i>
+                  <span>Add Income</span>
+                </button>
+                <button
+                  class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 !rounded-button whitespace-nowrap"
+                >
+                  <i class="ri-add-line"></i>
+                  <span>Add Expense</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Summary Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Total Income -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+              <h2 class="text-lg font-medium text-gray-600 mb-2">
+                Total Income
+              </h2>
+              <div class="flex items-end gap-2">
+                <span class="text-3xl font-bold text-gray-800">$5,842.50</span>
+                <span
+                  class="text-sm text-green-500 font-medium mb-1 flex items-center"
+                >
+                  <i class="ri-arrow-up-s-line"></i>
+                  8.3% from last month
+                </span>
+              </div>
+            </div>
+            <!-- Total Spending -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+              <h2 class="text-lg font-medium text-gray-600 mb-2">
+                Total Spending
+              </h2>
+              <div class="flex items-end gap-2">
+                <span class="text-3xl font-bold text-gray-800">$3,248.72</span>
+                <span
+                  class="text-sm text-red-500 font-medium mb-1 flex items-center"
+                >
+                  <i class="ri-arrow-up-s-line"></i>
+                  12.5% from last month
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- Quick Stats Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Budget Card -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <h3 class="text-gray-600 font-medium">Monthly Budget</h3>
+                  <p class="text-2xl font-bold text-gray-800 mt-1">$4,500.00</p>
+                </div>
+                <div
+                  class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100"
+                >
+                  <i class="ri-funds-line text-blue-600"></i>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                  <div
+                    class="bg-blue-500 h-2 rounded-full"
+                    style="width: 72%"
+                  ></div>
+                </div>
+                <span class="text-sm font-medium text-gray-600">72%</span>
+              </div>
+            </div>
+            <!-- Amount Spent Card -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <h3 class="text-gray-600 font-medium">Amount Spent</h3>
+                  <p class="text-2xl font-bold text-gray-800 mt-1">$3,248.72</p>
+                </div>
+                <div
+                  class="w-10 h-10 flex items-center justify-center rounded-full bg-red-100"
+                >
+                  <i class="ri-shopping-bag-3-line text-red-600"></i>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                  <div
+                    class="bg-red-500 h-2 rounded-full"
+                    style="width: 72%"
+                  ></div>
+                </div>
+                <span class="text-sm font-medium text-gray-600">72%</span>
+              </div>
+            </div>
+            <!-- Amount Remaining Card -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <h3 class="text-gray-600 font-medium">Amount Remaining</h3>
+                  <p class="text-2xl font-bold text-gray-800 mt-1">$1,251.28</p>
+                </div>
+                <div
+                  class="w-10 h-10 flex items-center justify-center rounded-full bg-green-100"
+                >
+                  <i class="ri-wallet-line text-green-600"></i>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                  <div
+                    class="bg-green-500 h-2 rounded-full"
+                    style="width: 28%"
+                  ></div>
+                </div>
+                <span class="text-sm font-medium text-gray-600">28%</span>
+              </div>
+            </div>
+          </div>
+          <!-- Charts and Transactions Section -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Category Breakdown -->
+            <div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-6">
+              <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-medium text-gray-800">
+                  Spending by Category
+                </h3>
+                <button class="text-gray-500 hover:text-gray-700">
+                  <i class="ri-more-2-fill"></i>
+                </button>
+              </div>
+              <div id="categoryChart" class="h-64"></div>
+              <div class="mt-6 space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <div
+                      class="w-3 h-3 rounded-full bg-[rgba(87,181,231,1)]"
+                    ></div>
+                    <span class="text-sm text-gray-700">Food & Dining</span>
+                  </div>
+                  <span class="text-sm font-medium text-gray-800">$982.45</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <div
+                      class="w-3 h-3 rounded-full bg-[rgba(141,211,199,1)]"
+                    ></div>
+                    <span class="text-sm text-gray-700">Housing</span>
+                  </div>
+                  <span class="text-sm font-medium text-gray-800"
+                    >$1,250.00</span
+                  >
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <div
+                      class="w-3 h-3 rounded-full bg-[rgba(251,191,114,1)]"
+                    ></div>
+                    <span class="text-sm text-gray-700">Transportation</span>
+                  </div>
+                  <span class="text-sm font-medium text-gray-800">$425.80</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <div
+                      class="w-3 h-3 rounded-full bg-[rgba(252,141,98,1)]"
+                    ></div>
+                    <span class="text-sm text-gray-700">Entertainment</span>
+                  </div>
+                  <span class="text-sm font-medium text-gray-800">$590.47</span>
+                </div>
+              </div>
+            </div>
+            <!-- Transactions List -->
+            <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+              <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-4">
+                  <h3 class="text-lg font-medium text-gray-800">
+                    Recent Transactions
+                  </h3>
+                  <div
+                    class="flex items-center gap-2 bg-gray-100 rounded-full p-1"
+                  >
+                    <button
+                      class="px-4 py-1 rounded-full bg-white text-gray-800 shadow-sm text-sm font-medium"
+                    >
+                      All
+                    </button>
+                    <button
+                      class="px-4 py-1 rounded-full text-gray-600 hover:bg-white hover:shadow-sm text-sm font-medium"
+                    >
+                      Income
+                    </button>
+                    <button
+                      class="px-4 py-1 rounded-full text-gray-600 hover:bg-white hover:shadow-sm text-sm font-medium"
+                    >
+                      Expenses
+                    </button>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="relative">
+                    <input
+                      type="text"
+                      placeholder="Search transactions..."
+                      class="pl-9 pr-4 py-2 bg-gray-100 rounded-lg text-sm border-none focus:ring-2 focus:ring-primary/20 focus:outline-none w-full"
+                    />
+                    <div
+                      class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center"
+                    >
+                      <i class="ri-search-line text-gray-500"></i>
+                    </div>
+                  </div>
+                  <button
+                    class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100"
+                  >
+                    <i class="ri-filter-3-line text-gray-600"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="overflow-y-auto max-h-[500px] pr-2">
+                <!-- Transaction Item -->
+                <!-- Income Transaction -->
+                <div
+                  class="flex items-center justify-between py-4 border-b border-gray-100"
+                >
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-10 h-10 flex items-center justify-center rounded-full bg-green-100"
+                    >
+                      <i class="ri-money-dollar-circle-line text-green-600"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-medium text-gray-800">
+                        Salary Deposit
+                      </h4>
+                      <p class="text-xs text-gray-500">Income</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-green-600">+$4,850.00</p>
+                    <p class="text-xs text-gray-500">Today, 09:00 AM</p>
+                  </div>
+                </div>
+                <!-- Expense Transaction -->
+                <div
+                  class="flex items-center justify-between py-4 border-b border-gray-100"
+                >
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-10 h-10 flex items-center justify-center rounded-full bg-red-100"
+                    >
+                      <i class="ri-shopping-bag-3-line text-red-600"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-medium text-gray-800">
+                        Whole Foods Market
+                      </h4>
+                      <p class="text-xs text-gray-500">Groceries</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-red-600">-$128.35</p>
+                    <p class="text-xs text-gray-500">Today, 11:42 AM</p>
+                  </div>
+                </div>
+                <div
+                  class="flex items-center justify-between py-4 border-b border-gray-100"
+                >
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100"
+                    >
+                      <i class="ri-home-4-line text-blue-600"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-medium text-gray-800">
+                        Apartment Rent
+                      </h4>
+                      <p class="text-xs text-gray-500">Housing</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-gray-800">-$1,250.00</p>
+                    <p class="text-xs text-gray-500">Apr 18, 09:00 AM</p>
+                  </div>
+                </div>
+                <div
+                  class="flex items-center justify-between py-4 border-b border-gray-100"
+                >
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-10 h-10 flex items-center justify-center rounded-full bg-purple-100"
+                    >
+                      <i class="ri-netflix-line text-purple-600"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-medium text-gray-800">
+                        Netflix Subscription
+                      </h4>
+                      <p class="text-xs text-gray-500">Entertainment</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-gray-800">-$15.99</p>
+                    <p class="text-xs text-gray-500">Apr 15, 03:24 PM</p>
+                  </div>
+                </div>
+                <div
+                  class="flex items-center justify-between py-4 border-b border-gray-100"
+                >
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-10 h-10 flex items-center justify-center rounded-full bg-yellow-100"
+                    >
+                      <i class="ri-taxi-line text-yellow-600"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-medium text-gray-800">
+                        Uber Ride
+                      </h4>
+                      <p class="text-xs text-gray-500">Transportation</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-gray-800">-$24.50</p>
+                    <p class="text-xs text-gray-500">Apr 14, 08:12 PM</p>
+                  </div>
+                </div>
+                <div
+                  class="flex items-center justify-between py-4 border-b border-gray-100"
+                >
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-10 h-10 flex items-center justify-center rounded-full bg-green-100"
+                    >
+                      <i class="ri-restaurant-line text-green-600"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-medium text-gray-800">
+                        Olive Garden
+                      </h4>
+                      <p class="text-xs text-gray-500">Food & Dining</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-gray-800">-$78.35</p>
+                    <p class="text-xs text-gray-500">Apr 12, 07:45 PM</p>
+                  </div>
+                </div>
+                <div
+                  class="flex items-center justify-between py-4 border-b border-gray-100"
+                >
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-10 h-10 flex items-center justify-center rounded-full bg-pink-100"
+                    >
+                      <i class="ri-t-shirt-line text-pink-600"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-medium text-gray-800">H&M</h4>
+                      <p class="text-xs text-gray-500">Shopping</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-gray-800">-$145.80</p>
+                    <p class="text-xs text-gray-500">Apr 10, 02:30 PM</p>
+                  </div>
+                </div>
+                <div
+                  class="flex items-center justify-between py-4 border-b border-gray-100"
+                >
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-10 h-10 flex items-center justify-center rounded-full bg-indigo-100"
+                    >
+                      <i class="ri-gas-station-line text-indigo-600"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-medium text-gray-800">
+                        Shell Gas Station
+                      </h4>
+                      <p class="text-xs text-gray-500">Transportation</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-gray-800">-$45.72</p>
+                    <p class="text-xs text-gray-500">Apr 8, 11:15 AM</p>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between py-4">
+                  <div class="flex items-center gap-4">
+                    <div
+                      class="w-10 h-10 flex items-center justify-center rounded-full bg-orange-100"
+                    >
+                      <i class="ri-shopping-cart-line text-orange-600"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-medium text-gray-800">Target</h4>
+                      <p class="text-xs text-gray-500">Shopping</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-gray-800">-$92.47</p>
+                    <p class="text-xs text-gray-500">Apr 5, 04:20 PM</p>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 text-center">
+                <button
+                  class="text-primary font-medium text-sm hover:text-primary/80"
+                >
+                  View All Transactions
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Monthly Spending Trend -->
+          <div class="mt-6 bg-white rounded-xl shadow-sm p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-lg font-medium text-gray-800">
+                Monthly Spending Trend
+              </h3>
+              <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                  <span class="text-sm text-gray-600">Income</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full bg-primary"></div>
+                  <span class="text-sm text-gray-600">Expenses</span>
+                </div>
+                <div class="relative">
+                  <button class="text-gray-500 hover:text-gray-700 px-2">
+                    <i class="ri-more-2-fill"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div id="trendChart" class="h-80"></div>
+          </div>
+        </div>
+      </main>
+      <!-- Floating Action Button -->
+      <div class="fixed bottom-6 right-6 flex flex-col gap-3">
+        <button
+          class="w-14 h-14 flex items-center justify-center bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600"
+        >
+          <i class="ri-add-line text-2xl"></i>
+          <span class="sr-only">Add Income</span>
+        </button>
+        <button
+          class="w-14 h-14 flex items-center justify-center bg-primary text-white rounded-full shadow-lg hover:bg-primary/90"
+        >
+          <i class="ri-subtract-line text-2xl"></i>
+          <span class="sr-only">Add Expense</span>
+        </button>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Period selector dropdown
+        const periodSelector = document.getElementById("periodSelector");
+        const periodDropdown = document.getElementById("periodDropdown");
+        periodSelector.addEventListener("click", function () {
+          periodDropdown.classList.toggle("hidden");
+        });
+        document.addEventListener("click", function (event) {
+          if (
+            !periodSelector.contains(event.target) &&
+            !periodDropdown.contains(event.target)
+          ) {
+            periodDropdown.classList.add("hidden");
+          }
+        });
+        // Category chart
+        const categoryChart = echarts.init(
+          document.getElementById("categoryChart")
+        );
+        const categoryOption = {
+          animation: false,
+          tooltip: {
+            trigger: "item",
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            borderColor: "#f1f5f9",
+            textStyle: {
+              color: "#1f2937",
+            },
+          },
+          series: [
+            {
+              name: "Spending by Category",
+              type: "pie",
+              radius: ["45%", "70%"],
+              avoidLabelOverlap: false,
+              itemStyle: {
+                borderRadius: 8,
+                borderColor: "#fff",
+                borderWidth: 2,
+              },
+              label: {
+                show: false,
+              },
+              emphasis: {
+                label: {
+                  show: false,
+                },
+              },
+              labelLine: {
+                show: false,
+              },
+              data: [
+                {
+                  value: 982.45,
+                  name: "Food & Dining",
+                  itemStyle: { color: "rgba(87, 181, 231, 1)" },
+                },
+                {
+                  value: 1250,
+                  name: "Housing",
+                  itemStyle: { color: "rgba(141, 211, 199, 1)" },
+                },
+                {
+                  value: 425.8,
+                  name: "Transportation",
+                  itemStyle: { color: "rgba(251, 191, 114, 1)" },
+                },
+                {
+                  value: 590.47,
+                  name: "Entertainment",
+                  itemStyle: { color: "rgba(252, 141, 98, 1)" },
+                },
+              ],
+            },
+          ],
+        };
+        categoryChart.setOption(categoryOption);
+        // Trend chart
+        const trendChart = echarts.init(document.getElementById("trendChart"));
+        const trendOption = {
+          animation: false,
+          grid: {
+            top: 20,
+            right: 20,
+            bottom: 30,
+            left: 60,
+          },
+          legend: {
+            data: ["Income", "Expenses"],
+            bottom: 0,
+          },
+          tooltip: {
+            trigger: "axis",
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            borderColor: "#f1f5f9",
+            textStyle: {
+              color: "#1f2937",
+            },
+          },
+          xAxis: {
+            type: "category",
+            data: [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec",
+            ],
+            axisLine: {
+              lineStyle: {
+                color: "#e2e8f0",
+              },
+            },
+            axisLabel: {
+              color: "#64748b",
+            },
+          },
+          yAxis: {
+            type: "value",
+            axisLine: {
+              show: false,
+            },
+            axisLabel: {
+              color: "#64748b",
+            },
+            splitLine: {
+              lineStyle: {
+                color: "#f1f5f9",
+              },
+            },
+          },
+          series: [
+            {
+              name: "Income",
+              type: "line",
+              data: [4500, 4700, 4900, 5842, 0, 0, 0, 0, 0, 0, 0, 0],
+              smooth: true,
+              symbol: "none",
+              lineStyle: {
+                width: 3,
+                color: "#22c55e",
+              },
+              areaStyle: {
+                color: {
+                  type: "linear",
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [
+                    { offset: 0, color: "rgba(34, 197, 94, 0.2)" },
+                    { offset: 1, color: "rgba(34, 197, 94, 0.01)" },
+                  ],
+                },
+              },
+            },
+            {
+              name: "Expenses",
+              type: "line",
+              data: [2800, 2950, 3100, 3248, 0, 0, 0, 0, 0, 0, 0, 0],
+              smooth: true,
+              symbol: "none",
+              lineStyle: {
+                width: 3,
+                color: "#6366f1",
+              },
+              areaStyle: {
+                color: {
+                  type: "linear",
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [
+                    { offset: 0, color: "rgba(99, 102, 241, 0.2)" },
+                    { offset: 1, color: "rgba(99, 102, 241, 0.01)" },
+                  ],
+                },
+              },
+            },
+          ],
+        };
+        trendChart.setOption(trendOption);
+        // Handle window resize
+        window.addEventListener("resize", function () {
+          categoryChart.resize();
+          trendChart.resize();
+        });
+      });
+    </script>
+  </body>
+</html>

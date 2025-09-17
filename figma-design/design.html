@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Figma Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+        font-family: "Poppins", sans-serif;
+      }
+      .card {
+        background-color: #1a1a1a;
+        position: relative;
+        border-radius: 0.4rem;
+        width: 400px;
+        height: 200px;
+        box-sizing: border-box;
+      }
+      .card-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .card-grid {
+        box-sizing: border-box;
+        gap: 0.5rem;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0px, 1fr));
+        grid-template-rows: repeat(5, minmax(0px, 1fr));
+        padding: 10px;
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .card-icon {
+        grid-area: 1 / 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 0;
+        font-style: normal;
+        position: relative;
+        flex-shrink: 0;
+        color: #000000;
+        font-size: 26px;
+        text-align: left;
+      }
+      .card-title-container {
+        grid-area: 2 / 1 / auto / span 2;
+        box-sizing: border-box;
+        align-content: stretch;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0;
+        position: relative;
+        color: #ffffff;
+        text-align: left;
+        font-weight: 600;
+        font-size: 18px;
+        /* flex-shrink: 0; */
+      }
+      .card-title {
+        /* display: flex;
+        flex-direction: column;
+        justify-content: center; */
+        /* line-height: 0; */
+        /* font-style: normal;
+        position: relative; */
+        /* flex-shrink: 0; */
+        white-space: nowrap;
+      }
+      /* .card-title p {
+        line-height: 30px;
+        white-space: pre;
+      } */
+      .card-category-container {
+        grid-area: 3 / 1;
+        box-sizing: border-box;
+        align-content: stretch;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .card-category {
+        line-height: 0;
+        font-style: normal;
+        position: relative;
+        flex-shrink: 0;
+        color: #838383;
+        font-size: 13px;
+        text-align: left;
+        white-space: nowrap;
+      }
+      .card-category p {
+        line-height: 21px;
+        white-space: pre;
+      }
+      .card-profit-container {
+        grid-area: 5 / 1 / auto / span 3;
+        box-sizing: border-box;
+        /* align-content: stretch; */
+        display: flex;
+        flex-direction: row;
+        gap: 0.625rem;
+        width: auto;
+        align-items: center;
+        color: #ffffff;
+        text-align: left;
+        justify-content: flex-start;
+        font-size: 16px;
+        padding: 0.625rem 0;
+        font-weight: 600;
+        position: relative;
+        position: relative;
+        /* flex-shrink: 0; */
+      }
+      .card-profit {
+        line-height: 0;
+        font-style: normal;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+      .card-profit p {
+        line-height: 27px;
+        white-space: pre;
+      }
+      .details-button {
+        font-size: 14px;
+        grid-area: 1 / 4;
+        position: relative;
+        background-color: #00c853;
+        border-radius: 0.25rem;
+        flex-shrink: 0;
+        color: white;
+      }
+      .details-button:hover {
+        background-color: #ffffff;
+        color: black;
+        cursor: pointer;
+        font-weight: 501;
+      }
+      .frame-content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        /* overflow: clip; */
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .frame-inner {
+        box-sizing: border-box;
+        align-content: stretch;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        /* padding: 0.5rem 1rem; */
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      /* .details-button-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 0;
+        font-style: normal;
+        position: relative;
+        flex-shrink: 0;
+        color: #ffffff;
+        font-size: 14px;
+        text-align: center;
+        white-space: nowrap;
+      } */
+      /* .details-button-text p {
+        line-height: 24px;
+        white-space: pre;
+      } */
+      .add-more-button {
+        grid-area: 2 / 4;
+        background-color: #ffffff;
+        position: relative;
+        border-radius: 0.25rem;
+        flex-shrink: 0;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .add-more-button:hover {
+        font-weight: 501;
+        color: white;
+        background-color: transparent;
+        border: 1px solid white;
+        cursor: pointer;
+      }
+      /* .add-more-button-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 0;
+        font-style: normal;
+        position: relative;
+        flex-shrink: 0;
+        color: #000000;
+        font-size: 14px;
+        text-align: center;
+        white-space: nowrap;
+      } */
+      /* .add-more-button-text p {
+        line-height: 24px;
+        white-space: pre;
+      } */
+      .gain-percentage-label-container {
+        grid-area: 4 / 4;
+        box-sizing: border-box;
+        align-content: stretch;
+        display: flex;
+        flex-direction: row;
+        gap: 0.625rem;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .gain-percentage-label {
+        line-height: 0;
+        font-style: normal;
+        position: relative;
+        flex-shrink: 0;
+        color: #838383;
+        font-size: 13px;
+        text-align: left;
+        white-space: nowrap;
+      }
+      .gain-percentage-label p {
+        line-height: 21px;
+        white-space: pre;
+      }
+      .gain-percentage-value-container {
+        grid-area: 5 / 4;
+        box-sizing: border-box;
+        align-content: stretch;
+        display: flex;
+        flex-direction: column;
+        gap: 0.625rem;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .gain-percentage-value-wrapper {
+        box-sizing: border-box;
+        align-content: stretch;
+        display: flex;
+        flex-direction: row;
+        height: 1.75rem;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0;
+        position: relative;
+        flex-shrink: 0;
+        width: 100%;
+      }
+      .gain-percentage-value {
+        flex-basis: 0;
+        display: flex;
+        flex-direction: column;
+        font-weight: 600;
+        flex-grow: 1;
+        height: 100%;
+        justify-content: center;
+        line-height: 0;
+        min-height: 1px;
+        min-width: 1px;
+        font-style: normal;
+        position: relative;
+        flex-shrink: 0;
+        font-size: 16px;
+        text-align: center;
+        color: rgb(74 222 128);
+      }
+      .gain-percentage-value p {
+        line-height: 27px;
+      }
+      .last-updated {
+        grid-area: 3 / 4;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 0;
+        font-style: normal;
+        position: relative;
+        flex-shrink: 0;
+        color: #828282;
+        font-size: 10px;
+        text-align: center;
+      }
+      .last-updated p {
+        line-height: 16px;
+      }
+      .profit-earned-label-container {
+        grid-area: 4 / 1 / auto / span 2;
+        box-sizing: border-box;
+        align-content: stretch;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .profit-earned-label {
+        line-height: 0;
+        font-style: normal;
+        position: relative;
+        flex-shrink: 0;
+        color: #838383;
+        font-size: 13px;
+        text-align: left;
+        white-space: nowrap;
+      }
+      .profit-earned-label p {
+        line-height: 21px;
+        white-space: pre;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="card-container">
+        <div class="card-grid">
+          <div class="card-icon">
+            <p>💻</p>
+          </div>
+          <div class="card-title-container">
+            <!-- <div class="card-title"> -->
+            <p>Tech Growth Fund</p>
+            <!-- </div> -->
+          </div>
+          <div class="card-category-container">
+            <div class="card-category">
+              <p>Technology</p>
+            </div>
+          </div>
+          <div class="card-profit-container">
+            <!-- <div class="card-profit"> -->
+            <div>$25,000,000.00</div>
+            <!-- </div> -->
+          </div>
+          <div class="details-button">
+            <div class="frame-content">
+              <div class="frame-inner">
+                <div class="details-button-text">
+                  <p>Details</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="add-more-button">
+            <div class="frame-content">
+              <div class="frame-inner">
+                <!-- <div class="add-more-button-text"> -->
+                <div>Add More</div>
+                <!-- </div> -->
+              </div>
+            </div>
+          </div>
+          <div class="gain-percentage-label-container">
+            <div class="gain-percentage-label">
+              <p>Gain %</p>
+            </div>
+          </div>
+          <div class="gain-percentage-value-container">
+            <div class="gain-percentage-value-wrapper">
+              <div class="gain-percentage-value">
+                <p>+12.5%</p>
+              </div>
+            </div>
+          </div>
+          <div class="last-updated">
+            <p>last updated since : 01-01-2025</p>
+          </div>
+          <div class="profit-earned-label-container">
+            <div class="profit-earned-label">
+              <p>Profit Earned</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

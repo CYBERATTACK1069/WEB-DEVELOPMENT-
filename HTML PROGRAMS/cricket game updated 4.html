@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CRICKET GAME</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+      * {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        background: #e0e5ec;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+      }
+
+      main {
+        background: #e0e5ec;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 20px 20px 60px #bec5cc, -20px -20px 60px #ffffff;
+      }
+
+      h1 {
+        color: #2d3436;
+        text-align: center;
+        margin-bottom: 2.5rem;
+        font-size: 2.5rem;
+        font-weight: 700;
+        position: relative;
+        text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.5);
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: lightgreen;
+        border-radius: 2px;
+        box-shadow: 3px 3px 6px #bec5cc, -3px -3px 6px #ffffff;
+      }
+
+      div:not(.buttons) {
+        width: 125px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: lightgreen;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 17px;
+        font-weight: 550;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: 5px 5px 10px #bec5cc, -5px -5px 10px #ffffff;
+        transition: all 0.3s ease;
+        border: none;
+      }
+
+      div:not(.buttons):hover {
+        color: white;
+        background-color: rgb(15, 15, 15);
+        box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.2),
+          inset -5px -5px 10px rgba(255, 255, 255, 0.1);
+      }
+
+      div:not(.buttons):active {
+        box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2),
+          inset -2px -2px 5px rgba(255, 255, 255, 0.1);
+        transform: scale(0.98);
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      .line {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        text-align: center;
+        background: #e0e5ec;
+        border-radius: 15px;
+        min-height: 80px;
+        width: 100%;
+        max-width: 400px;
+        color: #2d3436;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        box-shadow: inset 5px 5px 10px #bec5cc, inset -5px -5px 10px #ffffff;
+      }
+
+      .line:not(:empty) {
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 480px) {
+        main {
+          padding: 2rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        div:not(.buttons) {
+          width: 120px;
+          height: 38px;
+          font-size: 16px;
+        }
+
+        .line {
+          font-size: 1rem;
+          padding: 1rem;
+          text-transform: capitalize;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <h1>CRICKET GAME</h1>
+      <section class="buttons">
+        <div class="Bat">bat</div>
+        <div class="Ball">ball</div>
+        <div class="Stumps">stumps</div>
+        <h2 class="line"></h2>
+      </section>
+    </main>
+    <!-- <script>
+      let display_line = document.querySelector(".line");
+      function GenerateRandomNumber() {
+        let choice;
+        let Random_Number = Math.random() * 3;
+        if (Random_Number > 0 && Random_Number <= 1) {
+          choice = "ball";
+        } else if (Random_Number > 1 && Random_Number <= 2) {
+          choice = "stumps";
+        } else {
+          choice = "bat";
+        }
+        return choice;
+      }
+
+      function gen_Choice(userMove, computerMove) {
+        let display;
+        if (userMove === "bat") {
+          if (computerMove === "bat") {
+            display = "The match is tied.";
+          }
+          if (computerMove === "ball") {
+            display = `The user won.`;
+          }
+          if (computerMove === "stumps") {
+            display = `The computer won.`;
+          }
+        } else if (userMove === "ball") {
+          if (computerMove === "ball") {
+            display = "The match is tied ";
+          }
+          if (computerMove === "bat") {
+            display = `The computer won.`;
+          }
+          if (computerMove === "stumps") {
+            display = `The user won.`;
+          }
+        } else {
+          if (computerMove === "ball") {
+            display = "The user won.";
+          }
+          if (computerMove === "bat") {
+            display = `The user won.`;
+          }
+          if (computerMove === "stumps") {
+            display = `The match tied.`;
+          }
+        }
+        return display;
+      }
+
+      function displayMsg(userMove, computerMove, display) {
+        display_line.innerText = `The computers choice is ${computerMove}.\nThe users choice is ${userMove}.\n${display}`;
+      }
+
+      let Bat_Button = document.querySelector(".Bat");
+      Bat_Button.addEventListener("click", () => {
+        let Computers_choice = GenerateRandomNumber();
+        let cho = gen_Choice("bat", Computers_choice);
+        displayMsg("bat", Computers_choice, cho);
+      });
+
+      let Ball_Button = document.querySelector(".Ball");
+      Ball_Button.addEventListener("click", () => {
+        let Computers_choice = GenerateRandomNumber();
+        cho = gen_Choice("ball", Computers_choice);
+        displayMsg("ball", Computers_choice, cho);
+      });
+
+      let Stumps_Button = document.querySelector(".Stumps");
+      Stumps_Button.addEventListener("click", () => {
+        let Computers_choice = GenerateRandomNumber();
+        cho = gen_Choice("stumps", Computers_choice);
+        displayMsg("stumps", Computers_choice, cho);
+      });
+    </script> -->
+    <script src="/JAVASCRIPT_PROGRAMS/cricket game updated 4.js"></script>
+  </body>
+</html>

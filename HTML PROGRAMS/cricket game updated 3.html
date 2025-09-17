@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cricket Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+      :root {
+        --primary-color: #2ecc71;
+        --secondary-color: #27ae60;
+        --background-color: #f8f9fa;
+        --text-color: #2c3e50;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .game-container {
+        max-width: 800px;
+        width: 90%;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+      }
+
+      h1 {
+        text-align: center;
+        color: var(--primary-color);
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .scoreboard {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .score-card {
+        background: var(--primary-color);
+        color: white;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+      }
+
+      .score-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .score-card p {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .game-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .choices {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .choice-btn {
+        width: 150px;
+        height: 150px;
+        border: none;
+        border-radius: 15px;
+        background: white;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      .choice-btn:hover {
+        transform: translateY(-5px);
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .choice-btn i {
+        font-size: 2.5rem;
+      }
+
+      .choice-btn span {
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+
+      .result-display {
+        text-align: center;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+        margin-top: 1rem;
+        min-height: 100px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .result-display p {
+        font-size: 1.1rem;
+        line-height: 1.5;
+      }
+
+      .round-info {
+        text-align: center;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        color: var(--text-color);
+      }
+
+      @media (max-width: 600px) {
+        .game-container {
+          padding: 1rem;
+        }
+
+        .choices {
+          gap: 1rem;
+        }
+
+        .choice-btn {
+          width: 120px;
+          height: 120px;
+        }
+
+        .choice-btn i {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="game-container">
+      <h1>Cricket Game</h1>
+      
+      <div class="scoreboard">
+        <div class="score-card">
+          <h3>Your Score</h3>
+          <p id="user-score">0</p>
+        </div>
+        <div class="score-card">
+          <h3>Computer Score</h3>
+          <p id="computer-score">0</p>
+        </div>
+        <div class="score-card">
+          <h3>Ties</h3>
+          <p id="tie-score">0</p>
+        </div>
+      </div>
+
+      <div class="round-info">
+        Round: <span id="current-round">1</span>/5
+      </div>
+
+      <div class="game-area">
+        <div class="choices">
+          <button class="choice-btn" data-choice="BAT">
+            <i class="fas fa-cricket-bat-ball"></i>
+            <span>Bat</span>
+          </button>
+          <button class="choice-btn" data-choice="BALL">
+            <i class="fas fa-baseball-ball"></i>
+            <span>Ball</span>
+          </button>
+          <button class="choice-btn" data-choice="STUMPS">
+            <i class="fas fa-bullseye"></i>
+            <span>Stumps</span>
+          </button>
+        </div>
+
+        <div class="result-display" id="result-display">
+          <p>Choose your move to start the game!</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="/JAVASCRIPT_PROGRAMS/cricket game updated 4.js"></script>
+  </body>
+</html>

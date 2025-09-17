@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Earnings Dashboard</title>
+    <link rel="stylesheet" href="../CSS_PROGRAMS/earnings_dashboard.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h1>Earnings</h1>
+    </div>
+
+    <div class="dashboard">
+      <div class="chart-section">
+        <div class="card-details">
+          <div class="monthly-savings">monthly savings</div>
+          <div></div>
+          <div class="savings-amount">$124,500.00</div>
+          <div></div>
+          <div class="increment-text" colspan="4">
+            2.5 % increment since the last week
+          </div>
+          <div class="last-updated" colspan="2">
+            last updated since : 01-01-2025
+          </div>
+          <div colspan="2">
+            <button class="view-details-btn">VIEW DETAILS</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-container">
+        <!-- First Card -->
+        <div class="stats-card">
+          <div class="stats-header">
+            <div class="icon-container">
+              <img src="../IMAGES/income.png" alt="Income" class="icon" />
+            </div>
+            <button class="add-earnings-btn">Add Earnings</button>
+          </div>
+
+          <!-- Total earnings section -->
+          <div class="earnings-info">
+            <div>Total Earning (This Month)</div>
+            <div class="total-earnings">$ 1,500.00</div>
+            <div>
+              <span class="percentage-change percentage-up"
+                >+12.5% vs last month</span
+              >
+              <span class="last-updated">Last Updated: 12-03-2026</span>
+            </div>
+          </div>
+
+          <!-- Daily Average section -->
+          <div class="daily-average">
+            <div class="stats-header">
+              <div class="icon-container">
+                <img
+                  src="../IMAGES/daily earning avg.png"
+                  alt="Daily Average"
+                />
+                <div>Daily Average</div>
+              </div>
+              <span class="percentage-change percentage-down"
+                >-12.5% vs last day</span
+              >
+            </div>
+            <div class="total-earnings">$ 1,500.00</div>
+          </div>
+
+          <!-- Monthly Goal section -->
+          <div class="monthly-goal">
+            <div class="stats-header">
+              <div class="icon-container">
+                <img src="../IMAGES/monthly goal.png" alt="Monthly Goal" />
+                <div>Monthly Goal</div>
+              </div>
+            </div>
+            <div class="progress-container">
+              <div class="progress-bar">
+                <div class="progress-fill"></div>
+              </div>
+            </div>
+            <div class="progress-percentage">85%</div>
+          </div>
+        </div>
+
+        <!-- Export Report Card -->
+        <div class="stats-card">
+          <h3>Export Report</h3>
+          <div class="export-section">
+            <button class="export-btn">
+              <img src="../IMAGES/pdf.png" alt="PDF" class="small-icon" />
+              Export Earning Report (PDF)
+            </button>
+            <button class="export-btn">
+              <img src="../IMAGES/word.png" alt="DOCX" class="small-icon" />
+              Export Earning Report (DOCX)
+            </button>
+            <button class="export-btn">
+              <img src="../IMAGES/excel.png" alt="XLSX" class="small-icon" />
+              Export Earning Report (XLSX)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="transactions">
+      <div class="transactions-header">
+        <h2>Transactions History</h2>
+        <div class="transactions-actions">
+          <button class="export-btn">Add Transactions</button>
+          <div class="search-container">
+            <img src="../IMAGES/search.png" alt="Search" class="search-icon" />
+            <input type="text" placeholder="Search transactions..." />
+          </div>
+        </div>
+      </div>
+
+      <table class="transactions-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>15-December-2030</td>
+            <td>Figma's Pro Version Product</td>
+            <td>$299.99</td>
+            <td><span class="status completed">Completed</span></td>
+          </tr>
+          <tr>
+            <td>15-December-2030</td>
+            <td>Basic Plan</td>
+            <td>$39.99</td>
+            <td><span class="status completed">Completed</span></td>
+          </tr>
+          <tr>
+            <td>15-January-2030</td>
+            <td>Premium Plan By Figma' AI</td>
+            <td>$99.99</td>
+            <td><span class="status pending">Pending</span></td>
+          </tr>
+          <tr>
+            <td>15-April-2030</td>
+            <td>EFERT Stock Withdrawal</td>
+            <td>$5.99</td>
+            <td><span class="status completed">Completed</span></td>
+          </tr>
+          <tr>
+            <td>15-September-2020</td>
+            <td>Basic Plan</td>
+            <td>$50.00</td>
+            <td><span class="status completed">Completed</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      // Add dynamic functionality
+      document
+        .querySelector(".add-earnings-btn")
+        .addEventListener("click", () => {
+          alert("Add Earnings functionality will be implemented here");
+        });
+
+      // Search functionality
+      document
+        .querySelector(".search-container input")
+        .addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+          const rows = document.querySelectorAll(
+            ".transactions-table tbody tr"
+          );
+
+          rows.forEach((row) => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? "" : "none";
+          });
+        });
+
+      // Export functionality
+      document.querySelectorAll(".export-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          alert("Export functionality will be implemented here");
+        });
+      });
+    </script>
+  </body>
+</html>

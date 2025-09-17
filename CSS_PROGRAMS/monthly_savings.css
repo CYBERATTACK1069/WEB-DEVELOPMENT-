@@ -1,0 +1,114 @@
+.frame-74 {
+    background-color: #1A1A1A;
+    border-radius: 6px;
+    border: 1px solid #373737;
+    box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    width: 482px;
+    height: 150px;
+}
+
+.frame-82 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 142px;
+    width: 462px;
+    height: 36px;
+}
+
+.monthly-savings-text {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.6071428571428572em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.amount-text {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.6363636363636365em;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.frame-84 {
+    display: flex;
+    align-items: center;
+    gap: 114px;
+    height: 40px;
+}
+
+.last-updated-text {
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5em;
+    text-align: center;
+    color: #777777;
+}
+
+.view-details-button {
+    background-color: #00C853;
+    box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    width: 131px;
+    height: 40px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.view-details-button:hover {
+    opacity: 0.8;
+}
+
+.view-details-button:active {
+    opacity: 0.6;
+}
+
+.view-details-button>div {
+    font-family: Inter;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.6em;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+@media (max-width: 600px) {
+    .frame-74 {
+        width: 100%;
+        height: auto;
+        padding: 5px;
+    }
+
+    .frame-82 {
+        width: 100%;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .amount-text {
+        font-size: 18px;
+    }
+
+    .frame-84 {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start;
+    }
+}

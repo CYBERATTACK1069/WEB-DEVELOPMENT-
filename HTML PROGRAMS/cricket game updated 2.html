@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CRICKET GAME</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+      h1 {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      * {
+        font-family: "Poppins", sans-serif;
+        font-style: normal;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      div {
+        width: 125px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: lightgreen;
+        border-radius: 5px;
+        text-align: center;
+        /* margin: auto; */
+        font-size: 17px;
+        font-weight: 550;
+        text-transform: uppercase;
+      }
+      div:hover {
+        color: white;
+        background-color: rgb(15, 15, 15);
+        cursor: pointer;
+      }
+      .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-top: 30px;
+        gap: 20px;
+      }
+      .line {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>CRICKET GAME</h1>
+      <section class="buttons">
+        <div class="Bat">bat</div>
+        <div class="Ball">ball</div>
+        <div class="Stumps">stumps</div>
+        <h2 class="line"></h2>
+      </section>
+    </main>
+    <script>
+      let display_line = document.querySelector(".line");
+      function GenerateRandomNumber() {
+        let choice;
+        let Random_Number = Math.random() * 3;
+        if (Random_Number > 0 && Random_Number <= 1) {
+          choice = "ball";
+        } else if (Random_Number > 1 && Random_Number <= 2) {
+          choice = "stumps";
+        } else {
+          choice = "bat";
+        }
+        return choice;
+      }
+
+      let Bat_Button = document.querySelector(".Bat");
+      Bat_Button.addEventListener("click", () => {
+        let Computers_choice = GenerateRandomNumber();
+        // let Computers_choice;
+        if (Computers_choice === "bat") {
+          display_line.innerText =
+            "The users choice is Bat. The Computers choice is bat.\nThe match is tied.";
+        }
+        if (Computers_choice === "ball") {
+          display_line.innerText = `The computers choice is ball. The users choice is bat.\nThe user won.`;
+        }
+        if (Computers_choice === "stumps") {
+          k;
+          display_line.innerText = `The computers choice is stumps. The users choice is bat.\nThe computer won.`;
+        }
+      });
+
+      let Ball_Button = document.querySelector(".Ball");
+      Ball_Button.addEventListener("click", () => {
+        let Computers_choice = GenerateRandomNumber();
+        // let Computers_choice;
+        if (Computers_choice === "ball") {
+          display_line.innerText =
+            "The users choice is ball and the Computers choice is ball so\nThe match is tied ";
+        }
+        if (Computers_choice === "bat") {
+          display_line.innerText = `The computers choice is bat and the users choice is ball so\nThe computer won.`;
+        }
+        if (Computers_choice === "stumps") {
+          display_line.innerText = `The computers choice is stumps and the users choice is ball so\nThe user won.`;
+        }
+      });
+    </script>
+  </body>
+</html>
+        <!-- display_line.innerText =
+            "The users choice is ball and the Computers choice is ball so\nThe match is tied ";
+        }
+        if (Computers_choice === "bat") {
+          display_line.innerText = `The computers choice is bat and the users choice is ball so\nThe computer won.`;
+        }
+        if (Computers_choice === "stumps") {
+          display_line.innerText = `The computers choice is stumps and the users choice is ball so\nThe user won.`;
+        }
+      });
+    </script> -->
+  </body>
+</html>
